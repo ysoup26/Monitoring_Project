@@ -55,6 +55,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="View\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage.xaml.cs">
+      <DependentUpon>MenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MonitoringDetailPage.xaml.cs">
+      <DependentUpon>MonitoringDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MonitoringMenuPage.xaml.cs">
+      <DependentUpon>MonitoringMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TestDetailPage.xaml.cs">
+      <DependentUpon>TestDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TestMenuPage.xaml.cs">
+      <DependentUpon>TestMenuPage.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -67,6 +85,30 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MenuPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MonitoringDetailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MonitoringMenuPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TestDetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TestMenuPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -93,6 +135,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\Sorce\icons8-back-100.png" />
+    <Resource Include="View\Sorce\icons8-exit-100.png" />
+    <Resource Include="View\Sorce\icons8-fcg-100.png" />
+    <Resource Include="View\Sorce\icons8-help-100.png" />
+    <Resource Include="View\Sorce\icons8-logout-100.png" />
+    <Resource Include="View\Sorce\icons8-print-100.png" />
+    <Resource Include="View\Sorce\icons8-report-100.png" />
+    <Resource Include="View\Sorce\icons8-save-100.png" />
+    <Resource Include="View\Sorce\icons8-start-100.png" />
+    <Resource Include="View\Sorce\icons8-stop-100.png" />
+    <Resource Include="View\Sorce\icons8-test-100.png" />
+    <Resource Include="View\Sorce\icons8-user-100.png" />
+    <Resource Include="View\Sorce\sample.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

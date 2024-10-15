@@ -1,0 +1,203 @@
+﻿<Page x:Class="MonitoringGUI.View.TestMenuPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MonitoringGUI.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="720" d:DesignWidth="1280"
+      Loaded="Window_Loaded"
+      Title="TestMenuPage">
+
+    <!-- 미리 구현해둔 리소스 -->
+    <Page.Resources>
+        <!-- 수평 메뉴 버튼 -->
+        <Style x:Key="menu_horizontal_buttonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.4*"/>
+                                    <ColumnDefinition Width="0.8*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="1" Margin="5">
+                                    <Image Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}" />
+                                </Grid>
+                                <ContentPresenter Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="10 0 0 0"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Color="#464f78"/>
+                        <GradientStop Color="#323f6c" Offset="0.9"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="15 10"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                <GradientStop Color="#323f6c"/>
+                                <GradientStop Color="#FF1F284E" Offset="0.9"/>
+                            </LinearGradientBrush>
+
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!-- 검사대상 이미지 버튼 -->
+        <Style x:Key="inspection_buttonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2*"/>
+                                    <RowDefinition Height="0.8*"/>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0" Margin="8" Background="White">
+                                    <Image Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}" />
+                                </Grid>
+                                <ContentPresenter Grid.Row="1" HorizontalAlignment="Center" />
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#FF445BF4"/>
+            <Setter Property="Margin" Value="50 30"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                <GradientStop Color="#FF445BF4"/>
+                                <GradientStop Color="#FF1B1FBC" Offset="0.9"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Margin" Value="40 20"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!-- ListBox 디폴트 디자인 -->
+        <Style x:Key="listbox_style" TargetType="{x:Type ListBoxItem}" ></Style>
+    </Page.Resources>
+    <!-- 본문 -->
+    <Grid Background="#FF25275A">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="7*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="0" Grid.Row="0" Background="#FF27262C">
+            <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="검사 항목 선택" Foreground="White" FontWeight="Bold" FontSize="25" />
+            </Grid>
+
+        </Grid>
+        <Border Grid.Column="0" Grid.Row="1" Background="#FF27262C"  BorderBrush="Transparent" BorderThickness="0" CornerRadius="0,0,50,0">
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition  Height="4*"/>
+                    <RowDefinition Height="4*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <ListView Background="#FF27262C" BorderBrush="Transparent">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Background" Value="#FF27262C"/>
+                                <Setter Property="Margin" Value="5"/>
+                                <Setter Property="Padding" Value="5"/>
+                                <EventSetter Event="Selected" Handler="ListViewItem_Selected"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListViewItem Content="발사통제기" x:Name="Inspection1" IsSelected="True"/>
+                        <ListViewItem Content="유도탄통제기" x:Name="Inspection2"/>
+                    </ListView>
+                </Grid>
+                <Grid Grid.Row="1">
+
+
+                </Grid>
+                <Grid Grid.Row="2">
+                    <!--
+                 <Expander x:Name="TestList1" Header="발사통제기" Width="200" HorizontalAlignment="Left">
+                     <StackPanel>
+                         <TextBlock Text="{Binding Name}" Margin="5"/>
+                         <TextBlock Text="옵션 2" Margin="5"/>
+                         <TextBlock Text="옵션 3" Margin="5"/>
+                     </StackPanel>
+                 </Expander>
+                 -->
+                </Grid>
+            </Grid>
+        </Border>
+        <Grid Grid.Column="1" Grid.Row="0" Background="#FF27262C">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1"  Style="{StaticResource menu_horizontal_buttonStyle}"  Tag="./img/icons8-back-100.png"
+                 Content="Back" Click="BackButton_Click" Margin="30 20"/>
+            </Grid>
+
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="1" x:Name="Inspection_Select_Grid">
+            <Grid Background="#FF25275A">
+                <ItemsControl x:Name="InspectionList">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Rows="2" 
+				Columns="3"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Style="{StaticResource inspection_buttonStyle}" Tag="./img/icons8-test-50.png"
+                                                                      Click="Inspection_Button_Click">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="1*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" HorizontalAlignment="Center" Text="{Binding Name}"></TextBlock>
+                                    <TextBlock Grid.Row="1" HorizontalAlignment="Center" Text="ABCDEFG"></TextBlock>
+                                    <TextBlock Grid.Row="2" HorizontalAlignment="Center" Text="1234-12-1234"></TextBlock>
+
+                                </Grid>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+            </Grid>
+
+        </Grid>
+    </Grid>
+</Page>

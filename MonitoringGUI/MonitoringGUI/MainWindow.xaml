@@ -5,8 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MonitoringGUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="MainWindow"
+        Height="720" Width="1280"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen">
+    <!-- 윈도우 상단 메뉴바 제거시 나타나는 흰색 제거-->
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0"
+              CornerRadius="2"
+              GlassFrameThickness="0"
+              NonClientFrameEdges="None"
+              ResizeBorderThickness="3"/>
+    </WindowChrome.WindowChrome>
+    <Frame Name="frame" Source="/View/LoginPage.xaml" />
 </Window>

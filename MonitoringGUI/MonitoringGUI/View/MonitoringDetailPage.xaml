@@ -1,0 +1,201 @@
+﻿<Page x:Class="MonitoringGUI.View.MonitoringDetailPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+        xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts"
+        xmlns:local="clr-namespace:MonitoringGUI.View"
+    mc:Ignorable="d" 
+      d:DesignHeight="720" d:DesignWidth="1280"
+      Title="MonitoringDetailPage">
+    <Page.Resources>
+        <Style x:Key="menu_horizontal_buttonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.4*"/>
+                                    <ColumnDefinition Width="0.8*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="1" Margin="5">
+                                    <Image Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}" />
+                                </Grid>
+                                <ContentPresenter Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="10 0 0 0"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Color="#464f78"/>
+                        <GradientStop Color="#323f6c" Offset="0.9"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="15 10"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                <GradientStop Color="#323f6c"/>
+                                <GradientStop Color="#FF1F284E" Offset="0.9"/>
+                            </LinearGradientBrush>
+
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="inspection_buttonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.8*"/>
+                                    <RowDefinition Height="3*"/>
+                                    <RowDefinition Height="2*"/>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="1" Margin="8">
+                                    <Image Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}" />
+                                </Grid>
+                                <ContentPresenter Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#FF445BF4"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF2629B7"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+    <Page.DataContext>
+        <local:MonitoringDetailPageViewModel/>
+    </Page.DataContext>
+
+    <Grid Background="#FFE6E6E6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="7*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="0" Grid.Row="0" Background="#FF27262C">
+            <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="모니터링 페이지" Foreground="White" FontWeight="Bold" FontSize="16" />
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="0" Grid.Row="1">
+            <Border Background="#FF25275A" BorderBrush="Transparent" BorderThickness="0" CornerRadius="0,0,45,0">
+                <ListView Background="Transparent">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="FontSize" Value="15"/>
+                            <Setter Property="Margin" Value="10"/>
+                            <EventSetter Event="Selected" Handler="ListViewItem_Selected"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListViewItem x:Name="item1" Content="막대 그래프" IsSelected="True"/>
+                    <ListViewItem x:Name="item2" Content="실시간 그래프"/>
+                    <ListViewItem Content="외부용 회로카드 조립체"/>
+                    <ListViewItem Content="경보용 회로카드 조립체"/>
+                    <ListViewItem Content="개별용 회로카드 조립체 #1"/>
+                </ListView>
+            </Border>
+        </Grid>
+        <!-- 상단바 -->
+        <Grid Grid.Column="1" Grid.Row="0" Background="#FF27262C">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1"  Style="{StaticResource menu_horizontal_buttonStyle}"  Tag="./img/icons8-back-100.png"
+ Content="Back" Click="BackButton_Click" Margin="30 20"/>
+            </Grid >
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="0.3*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <dxc:ChartControl x:Name="Content1" HorizontalAlignment="Center" Height="437" VerticalAlignment="Center" Width="768" DataSource="{Binding Data}" Visibility="Visible">
+                        <dxc:ChartControl.CrosshairOptions>
+                            <dxc:CrosshairOptions ShowArgumentLabels="True" ShowValueLabels="True" ShowValueLine="True"/>
+                        </dxc:ChartControl.CrosshairOptions>
+                        <dxc:ChartControl.Titles>
+                            <dxc:Title Content="Sales by Regions" HorizontalAlignment="Center"/>
+                        </dxc:ChartControl.Titles>
+                        <dxc:ChartControl.Legends>
+                            <dxc:Legend/>
+                        </dxc:ChartControl.Legends>
+                        <dxc:XYDiagram2D>
+                            <dxc:BarSideBySideSeries2D DisplayName="Annual Statistics" ArgumentDataMember="Argument" ValueDataMember="Value" CrosshairLabelPattern="${V:f2}M"/>
+                        </dxc:XYDiagram2D>
+                    </dxc:ChartControl>
+                   
+                    <dxc:ChartControl x:Name="Content2" HorizontalAlignment="Center" Height="437" VerticalAlignment="Center" Width="768" DataSource="{Binding Data}" Visibility="Hidden">
+                        <dxc:ChartControl.CrosshairOptions>             
+                            <dxc:CrosshairOptions ShowArgumentLabels="True" ShowValueLabels="True" ShowValueLine="True"/>
+                        </dxc:ChartControl.CrosshairOptions>
+                        <dxc:ChartControl.Titles>
+                            <dxc:Title Content="Sales by Regions2" HorizontalAlignment="Center"/>
+                        </dxc:ChartControl.Titles>
+                        <dxc:ChartControl.Legends>
+                            <dxc:Legend/>
+                        </dxc:ChartControl.Legends>
+                        <dxc:XYDiagram2D>
+                            <dxc:BarSideBySideSeries2D DisplayName="Annual Statistics" ArgumentDataMember="Argument" ValueDataMember="Value" CrosshairLabelPattern="${V:f2}M"/>
+                        </dxc:XYDiagram2D>
+                    </dxc:ChartControl>
+
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+
+                    </Grid>
+                    <Grid Grid.Column="1">
+
+                    </Grid>
+                    <Grid Grid.Column="2">
+
+                    </Grid>
+
+                </Grid>
+               
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>
