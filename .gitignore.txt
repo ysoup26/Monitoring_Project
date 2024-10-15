@@ -1,0 +1,10 @@
+##빌드 아티팩트
+#bin 폴더
+C:\git\WPF_Monitoring\MonitoringGUI\MonitoringGUI\bin
+#obj 폴더
+C:\git\WPF_Monitoring\MonitoringGUI\MonitoringGUI\obj
+
+##사용자 설정 및 환경 파일
+#.vs 폴더
+test/
+*.a
