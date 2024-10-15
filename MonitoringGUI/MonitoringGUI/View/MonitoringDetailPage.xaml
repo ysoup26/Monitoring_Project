@@ -89,9 +89,7 @@
             </Style.Triggers>
         </Style>
     </Page.Resources>
-    <Page.DataContext>
-        <local:MonitoringDetailPageViewModel/>
-    </Page.DataContext>
+   
 
     <Grid Background="#FFE6E6E6">
         <Grid.ColumnDefinitions>
@@ -160,9 +158,9 @@
                             <dxc:BarSideBySideSeries2D DisplayName="Annual Statistics" ArgumentDataMember="Argument" ValueDataMember="Value" CrosshairLabelPattern="${V:f2}M"/>
                         </dxc:XYDiagram2D>
                     </dxc:ChartControl>
-                   
+
                     <dxc:ChartControl x:Name="Content2" HorizontalAlignment="Center" Height="437" VerticalAlignment="Center" Width="768" DataSource="{Binding Data}" Visibility="Hidden">
-                        <dxc:ChartControl.CrosshairOptions>             
+                        <dxc:ChartControl.CrosshairOptions>
                             <dxc:CrosshairOptions ShowArgumentLabels="True" ShowValueLabels="True" ShowValueLine="True"/>
                         </dxc:ChartControl.CrosshairOptions>
                         <dxc:ChartControl.Titles>
