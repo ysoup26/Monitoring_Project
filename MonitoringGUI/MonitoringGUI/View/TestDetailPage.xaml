@@ -166,7 +166,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="1"  Style="{StaticResource menu_horizontal_buttonStyle}"  Tag="./img/icons8-back-100.png"
-    Content="Back" Click="BackButton_Click" Margin="40 20"/>
+    Content="Back" Click="BackButton_Click" Margin="30 20"/>
             </Grid>
         </Grid>
         <Grid Grid.Column="1" Grid.Row="1">
