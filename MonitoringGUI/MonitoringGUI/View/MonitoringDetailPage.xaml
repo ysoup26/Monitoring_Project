@@ -133,10 +133,11 @@
                     <Button Grid.Row="0" Margin="10"
                             HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent" Click="ChartUpdateButton_Click">
                         <Image Source="{dx:FontIconSource 59720, ColorName=White}"/>
-                        </Button>
+                    </Button>
                 </Grid>
+                     
                 <Grid Grid.Row="1">
-                    <ListView Background="Transparent" BorderBrush="Transparent">
+                    <ListView Background="Transparent" BorderBrush="Transparent" Grid.RowSpan="2">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="Foreground" Value="White"/>
@@ -265,7 +266,7 @@ Content="Title" />
                                 <!--#endregion-->
                             </dxc:ChartControl>
                         </Grid>
-                        
+
 
                     </dx:DXTabItem>
                     <dx:DXTabItem
@@ -342,7 +343,7 @@ Content="Title" />
                 </dx:DXTabControl>
             </DockPanel>
         </Grid>
-        
-        
+
+
     </Grid>
 </Page>
