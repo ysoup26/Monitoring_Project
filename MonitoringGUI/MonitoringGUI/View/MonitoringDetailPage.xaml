@@ -6,11 +6,11 @@
         xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
         xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts"
         xmlns:local="clr-namespace:MonitoringGUI.View"
-        xmlns:data="clr-namespace:MonitoringGUI.DataModels"
+        xmlns:datas="clr-namespace:MonitoringGUI.DataModels"
     mc:Ignorable="d" 
       d:DesignHeight="720" d:DesignWidth="1280"
       Title="MonitoringDetailPage">
-    
+
     <Page.Resources>
         <Style x:Key="menu_horizontal_buttonStyle" TargetType="Button">
             <Setter Property="Template">
@@ -91,10 +91,6 @@
             </Style.Triggers>
         </Style>
     </Page.Resources>
-    <Page.DataContext>
-        <local:MonitoringDetailPageViewModel/>
-    </Page.DataContext>
-
 
     <Grid Background="#FFE6E6E6">
         <Grid.RowDefinitions>
@@ -107,7 +103,7 @@
                 <ColumnDefinition Width="4*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock Text="모니터링 페이지" Foreground="White" FontWeight="Bold" FontSize="16" />
+                <TextBlock x:Name="pageTitle" Text="모니터링 페이지" Foreground="White" FontWeight="Bold" FontSize="16" />
             </Grid>
             <!-- 상단바 -->
             <Grid Grid.Column="1" Background="#FF27262C">
@@ -148,14 +144,18 @@
                 <dx:DXTabControl>
                     <dx:DXTabItem
                         Header="기본정보">
+                        <StackPanel>
+                            <TextBox x:Name="textbox2"></TextBox>
+                            <TextBlock Text="{Binding Text, ElementName=textbox2}"/>
+                        </StackPanel>
+
                     </dx:DXTabItem>
                     <dx:DXTabItem
                         Header="그래프" IsSelected="True">
                         <dxc:ChartControl
                             Name="chart"
-                            AnimationMode="OnLoad"
                             CrosshairEnabled="True"
-                            DataSource="{x:Static data:Temperature.Data}">
+                            DataSource="{x:Static datas:Temperature.Data}">
                             <dxc:ChartControl.Diagram>
                                 <dxc:XYDiagram2D>
                                     <!--#region Axes-->
@@ -187,16 +187,16 @@
                                     </dxc:XYDiagram2D.AxisY>
                                     <!--#endregion-->
                                     <dxc:LineSeries2D
+                                        MarkerVisible="True"
+                                        
                                         AnimationAutoStartMode="SetStartState"
                                         ArgumentDataMember="Time"
                                         ValueDataMember="Temp"
-                                        CrosshairLabelPattern="{}{S}: {V}kWt"
-                                        LabelsVisibility="{Binding ElementName=chbShowLabels, Path=IsChecked}">
-                                                                            <dxc:LineSeries2D.Label>
-                                                                                <dxc:SeriesLabel
+                                        CrosshairLabelPattern="{}{S}: {V}ºC">
+                                        <dxc:LineSeries2D.Label>
+                                                <dxc:SeriesLabel
                                                 ConnectorVisible="False"
-                                                ResolveOverlappingMode="Default" 
-            />
+                                                ResolveOverlappingMode="Default"/>
                                         </dxc:LineSeries2D.Label>
                                     </dxc:LineSeries2D>
                                 </dxc:XYDiagram2D>
@@ -206,7 +206,7 @@
                                 <dxc:Title
             Dock="Top"
             HorizontalAlignment="Center"
-            Content="Power Consumption per Working Day" />
+            Content="Title" />
                             </dxc:ChartControl.Titles>
                             <!--#endregion-->
                         </dxc:ChartControl>
@@ -214,6 +214,74 @@
                     </dx:DXTabItem>
                     <dx:DXTabItem
                         Header="표">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.5*"/>
+                                <RowDefinition Height="10*"/>
+                            </Grid.RowDefinitions>
+                            <Button Grid.Row="0"
+                                    HorizontalAlignment="Right" BorderBrush="Transparent" Click="ChartUpdateButton_Click">
+                                <Image Source="{dx:FontIconSource 59255}"/>
+                            </Button>
+                            <dxc:ChartControl
+                                    Grid.Row="1"
+                                    Name="chart2"
+                                    CrosshairEnabled="True"
+                                    DataSource="{Binding Data}">
+                                <dxc:ChartControl.Diagram>
+                                    <dxc:XYDiagram2D>
+                                        <!--#region Axes-->
+                                        <dxc:XYDiagram2D.AxisX>
+                                            <dxc:AxisX2D
+                                                GridLinesVisible="True">
+                                                <dxc:AxisX2D.DateTimeScaleOptions>
+                                                    <dxc:ContinuousDateTimeScaleOptions />
+                                                </dxc:AxisX2D.DateTimeScaleOptions>
+                                                <dxc:AxisX2D.WholeRange>
+                                                    <dxc:Range
+                                                        AutoSideMargins="False"
+                                                        SideMarginsValue="1800000" />
+                                                </dxc:AxisX2D.WholeRange>
+                                            </dxc:AxisX2D>
+                                        </dxc:XYDiagram2D.AxisX>
+                                        <dxc:XYDiagram2D.AxisY>
+                                            <dxc:AxisY2D
+                                                     GridLinesMinorVisible="True">
+                                                <dxc:AxisY2D.WholeRange>
+                                                    <dxc:Range
+                                                        dxc:AxisY2D.AlwaysShowZeroLevel="False" />
+                                                </dxc:AxisY2D.WholeRange>
+                                                <dxc:AxisY2D.Title>
+                                                    <dxc:AxisTitle
+                                                        Content="Temp" />
+                                                </dxc:AxisY2D.Title>
+                                            </dxc:AxisY2D>
+                                        </dxc:XYDiagram2D.AxisY>
+                                        <!--#endregion-->
+                                        <dxc:LineSeries2D
+                                            MarkerVisible="True"
+                                            AnimationAutoStartMode="SetStartState"
+                                            ArgumentDataMember="date"
+                                            ValueDataMember="temp"
+                                            CrosshairLabelPattern="{}{S}: {V}ºC">
+                                            <dxc:LineSeries2D.Label>
+                                                <dxc:SeriesLabel
+                                                    ConnectorVisible="False"
+                                                    ResolveOverlappingMode="Default"/>
+                                            </dxc:LineSeries2D.Label>
+                                        </dxc:LineSeries2D>
+                                    </dxc:XYDiagram2D>
+                                </dxc:ChartControl.Diagram>
+                                <!--#region Titles-->
+                                <dxc:ChartControl.Titles>
+                                    <dxc:Title
+                                        Dock="Top"
+                                        HorizontalAlignment="Center"
+                                        Content="Title" />
+                                </dxc:ChartControl.Titles>
+                                <!--#endregion-->
+                            </dxc:ChartControl>
+                        </Grid>
                     </dx:DXTabItem>
                 </dx:DXTabControl>
             </DockPanel>

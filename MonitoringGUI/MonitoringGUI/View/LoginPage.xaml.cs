@@ -31,6 +31,12 @@ namespace MonitoringGUI.View
         }
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            if (true)
+            {
+                MenuPage menuPage = new MenuPage();
+                NavigationService.Navigate(menuPage);
+            }
+            
             var idBorder = (Border)id.Template.FindName("border", id);
             var passwordBorder = (Border)password.Template.FindName("border", password);
 

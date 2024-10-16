@@ -1,7 +1,10 @@
-﻿using System;
+﻿using DevExpress.Mvvm;
+using MonitoringGUI.DataModels;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,14 +20,12 @@ using System.Windows.Shapes;
 
 namespace MonitoringGUI.View
 {
-    /// <summary>
-    /// Chart.xaml에 대한 상호 작용 논리
-    /// </summary>
     public partial class MonitoringDetailPage : Page
     {
         public MonitoringDetailPage()
         {
             InitializeComponent();
+            this.DataContext = new MonitoringDetailPageViewModel();
 
         }
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -33,30 +34,55 @@ namespace MonitoringGUI.View
             NavigationService.Navigate(monitoring_menu_page);
         }
 
-    }
-    public class DataPoint
-    {
-        public string Argument { get; set; }
-        public double Value { get; set; }
-        public static ObservableCollection<DataPoint> GetDataPoints()
+        private void ChartUpdateButton_Click(object sender, RoutedEventArgs e)
         {
-            return new ObservableCollection<DataPoint>
-            {
-                new DataPoint { Argument = "Asia", Value = 5.289D},
-                    new DataPoint { Argument = "Australia", Value = 2.2727D},
-                    new DataPoint { Argument = "Europe", Value = 3.7257D},
-                    new DataPoint { Argument = "North America", Value = 4.1825D},
-                    new DataPoint { Argument = "South America", Value = 2.1172D},
+            var viewModel = (MonitoringDetailPageViewModel)DataContext;
+            viewModel.UpdateTempData();
+        }
+    }
 
+    public class Temp
+    {
+        public DateTime date {  get; set; }
+        public double temp { get; set; }
+        
+    }
+    public class MonitoringDetailPageViewModel : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public ObservableCollection<Temp> Data { get; set; }
+        public static ObservableCollection<Temp> GetTempData()
+        {
+            return new ObservableCollection<Temp>
+            {
+                new Temp{date = new DateTime(2024, 5, 6, 7, 0, 0), temp=25},
+                new Temp{date = new DateTime(2024, 5, 6, 8, 0, 0), temp=30},
+                new Temp{date = new DateTime(2024, 5, 6, 9, 0, 0), temp=20},
+                new Temp{date = new DateTime(2024, 5, 6, 10, 0, 0), temp=28},
+                new Temp{date = new DateTime(2024, 5, 6, 11, 0, 0), temp=35},
             };
         }
+        public void UpdateTempData()
+        {
+            this.Data = new ObservableCollection<Temp>
+            {
+                new Temp { date = new DateTime(2024, 5, 6, 7, 0, 0), temp = 0 },
+                new Temp { date = new DateTime(2024, 5, 6, 8, 0, 0), temp = 40 },
+                new Temp { date = new DateTime(2024, 5, 6, 9, 0, 0), temp = 22 },
+                new Temp { date = new DateTime(2024, 5, 6, 10, 0, 0), temp = 38 },
+                new Temp { date = new DateTime(2024, 5, 6, 11, 0, 0), temp = 50 },
+            };
+            OnPropertyChanged(nameof(Data));
         }
-    public class MonitoringDetailPageViewModel
-    {
-        public ObservableCollection<DataPoint> Data { get; private set; }
         public MonitoringDetailPageViewModel()
         {
-            this.Data = DataPoint.GetDataPoints();
+            this.Data = GetTempData();
+            
+        }
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
     

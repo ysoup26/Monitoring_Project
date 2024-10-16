@@ -15,42 +15,24 @@ namespace MonitoringGUI.DataModels
             {
                 DataTable table = new DataTable();
                 table.Columns.AddRange(new DataColumn[] { new DataColumn("Time", typeof(DateTime)), new DataColumn("Temp",typeof(double))});
+                table.Rows.Add(new DateTime(24, 5, 6, 7, 0, 0),30);
+                table.Rows.Add(new DateTime(24, 5, 6, 8, 0, 0), 30);
+                table.Rows.Add(new DateTime(24, 5, 6, 9, 0, 0), 43);
+                table.Rows.Add(new DateTime(24, 5, 6, 10, 0, 0), 30);
+                table.Rows.Add(new DateTime(24, 5, 6, 11, 0, 0), 31);
+                table.Rows.Add(new DateTime(24, 5, 6, 12, 0, 0), 38);
+                table.Rows.Add(new DateTime(24, 5, 6, 13, 0, 0), 38);
+                table.Rows.Add(new DateTime(24, 5, 6, 14, 0, 0), 39);
+                table.Rows.Add(new DateTime(24, 5, 6, 15, 0, 0), 37);
+                table.Rows.Add(new DateTime(24, 5, 6, 16, 0, 0), 22);
+                table.Rows.Add(new DateTime(24, 5, 6, 17, 0, 0), 32);
+                table.Rows.Add(new DateTime(24, 5, 6, 18, 0, 0), 34);
+                table.Rows.Add(new DateTime(24, 5, 6, 19, 0, 0), 36);
+                table.Rows.Add(new DateTime(24, 5, 6, 20, 0, 0), 55);
+                table.Rows.Add(new DateTime(24, 5, 6, 21, 0, 0), 52);
+                table.Rows.Add(new DateTime(24, 5, 6, 22, 0, 0), 50);
+                table.Rows.Add(new DateTime(24, 5, 6, 23, 0, 0), 44);
 
-                table.Rows.Add(new DateTime(1, 1, 1, 7, 0, 0), 429);
-                table.Rows.Add(new DateTime(1, 1, 1, 9, 0, 0), 301);
-                table.Rows.Add(new DateTime(1, 1, 1, 8, 0, 0), 432);
-                table.Rows.Add(new DateTime(1, 1, 1, 10, 0, 0), 307);
-                table.Rows.Add(new DateTime(1, 1, 1, 11, 0, 0), 310);
-                table.Rows.Add(new DateTime(1, 1, 1, 12, 0, 0), 380);
-                table.Rows.Add(new DateTime(1, 1, 1, 13, 0, 0), 384);
-                table.Rows.Add(new DateTime(1, 1, 1, 14, 0, 0), 398);
-                table.Rows.Add(new DateTime(1, 1, 1, 15, 0, 0), 379);
-                table.Rows.Add(new DateTime(1, 1, 1, 16, 0, 0), 220);
-                table.Rows.Add(new DateTime(1, 1, 1, 17, 0, 0), 321);
-                table.Rows.Add(new DateTime(1, 1, 1, 18, 0, 0), 341);
-                table.Rows.Add(new DateTime(1, 1, 1, 19, 0, 0), 368);
-                table.Rows.Add(new DateTime(1, 1, 1, 20, 0, 0), 557);
-                table.Rows.Add(new DateTime(1, 1, 1, 21, 0, 0), 523);
-                table.Rows.Add(new DateTime(1, 1, 1, 22, 0, 0), 501);
-                table.Rows.Add(new DateTime(1, 1, 1, 23, 0, 0), 443);
-
-                table.Rows.Add(new DateTime(1, 1, 1, 7, 0, 0), 260);
-                table.Rows.Add(new DateTime(1, 1, 1, 8, 0, 0), 287);
-                table.Rows.Add(new DateTime(1, 1, 1, 9, 0, 0), 285);
-                table.Rows.Add(new DateTime(1, 1, 1, 10, 0, 0), 281);
-                table.Rows.Add(new DateTime(1, 1, 1, 11, 0, 0), 294);
-                table.Rows.Add(new DateTime(1, 1, 1, 12, 0, 0), 303);
-                table.Rows.Add(new DateTime(1, 1, 1, 13, 0, 0), 325);
-                table.Rows.Add(new DateTime(1, 1, 1, 14, 0, 0), 336);
-                table.Rows.Add(new DateTime(1, 1, 1, 15, 0, 0), 325);
-                table.Rows.Add(new DateTime(1, 1, 1, 16, 0, 0), 186);
-                table.Rows.Add(new DateTime(1, 1, 1, 17, 0, 0), 420);
-                table.Rows.Add(new DateTime(1, 1, 1, 18, 0, 0), 455);
-                table.Rows.Add(new DateTime(1, 1, 1, 19, 0, 0), 481);
-                table.Rows.Add(new DateTime(1, 1, 1, 20, 0, 0), 487);
-                table.Rows.Add(new DateTime(1, 1, 1, 21, 0, 0), 490);
-                table.Rows.Add(new DateTime(1, 1, 1, 22, 0, 0), 467);
-                table.Rows.Add(new DateTime(1, 1, 1, 23, 0, 0), 409);
                 return table;
             }
         }
