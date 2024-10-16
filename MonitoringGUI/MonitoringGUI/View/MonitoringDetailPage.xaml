@@ -6,6 +6,7 @@
         xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
         xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts"
         xmlns:local="clr-namespace:MonitoringGUI.View"
+        xmlns:data="clr-namespace:MonitoringGUI.DataModels"
     mc:Ignorable="d" 
       d:DesignHeight="720" d:DesignWidth="1280"
       Title="MonitoringDetailPage">
@@ -96,144 +97,128 @@
 
 
     <Grid Background="#FFE6E6E6">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"></ColumnDefinition>
-            <ColumnDefinition Width="3*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="7*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Column="0" Grid.Row="0" Background="#FF27262C">
-            <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Grid Grid.Row="0" Background="#FF27262C">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="4*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <TextBlock Text="모니터링 페이지" Foreground="White" FontWeight="Bold" FontSize="16" />
             </Grid>
-        </Grid>
-        <Grid Grid.Column="0" Grid.Row="1">
-            <Border Background="#FF25275A" BorderBrush="Transparent" BorderThickness="0" CornerRadius="0,0,45,0">
-                <ListView Background="Transparent">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="Foreground" Value="White"/>
-                            <Setter Property="Background" Value="Transparent"/>
-                            <Setter Property="FontSize" Value="15"/>
-                            <Setter Property="Margin" Value="10"/>
-                            <EventSetter Event="Selected" Handler="ListViewItem_Selected"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    <ListViewItem x:Name="item1" Content="막대 그래프" IsSelected="True"/>
-                    <ListViewItem x:Name="item2" Content="실시간 그래프"/>
-                    <ListViewItem Content="외부용 회로카드 조립체"/>
-                    <ListViewItem Content="경보용 회로카드 조립체"/>
-                    <ListViewItem Content="개별용 회로카드 조립체 #1"/>
-                </ListView>
-            </Border>
-        </Grid>
-        <!-- 상단바 -->
-        <Grid Grid.Column="1" Grid.Row="0" Background="#FF27262C">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="4*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="1"  Style="{StaticResource menu_horizontal_buttonStyle}"  Tag="./img/icons8-back-100.png"
- Content="Back" Click="BackButton_Click" Margin="30 20"/>
-            </Grid >
-        </Grid>
-        <!-- 내용 그리드 1-->
-        <Grid Grid.Column="1" Grid.Row="1" x:Name="Content1" Visibility="Visible" >
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="2*"/>
-                        <RowDefinition Height="1*"/>
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0" Margin="20">
-                        <Image Source="./img/memory_sample.jpg"/>
-                    </Grid>
-                    <Grid Grid.Row="1" Margin="20">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1*"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Text="대상 이름"></TextBlock>
-                        <TextBlock Grid.Row="1" Text="모니터링 항목: "></TextBlock>
-                    </Grid>
-                </Grid>
-                <Grid Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="5*"/>
-                        <RowDefinition Height="1*"/>
-                    </Grid.RowDefinitions>
-                    <Button Grid.Row="1" Style="{StaticResource inspection_buttonStyle}" Tag="./img/icons8-save-100.png" 
-                            Content="갱신" />
-                </Grid>
-            </Grid>
-        </Grid>
-        <!-- 내용 그리드 2-->
-        <Grid Grid.Column="1" Grid.Row="1" x:Name="Content2" Visibility="Hidden">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="5*"/>
-                    <RowDefinition Height="0.3*"/>
-                    <RowDefinition Height="1*"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <Grid>
-                    </Grid>
-                    <dxc:ChartControl HorizontalAlignment="Center" Height="437" VerticalAlignment="Center" Width="768" DataSource="{Binding Data}">
-                        <dxc:ChartControl.CrosshairOptions>
-                            <dxc:CrosshairOptions ShowArgumentLabels="True" ShowValueLabels="True" ShowValueLine="True"/>
-                        </dxc:ChartControl.CrosshairOptions>
-                        <dxc:ChartControl.Titles>
-                            <dxc:Title Content="Sales by Regions2" HorizontalAlignment="Center"/>
-                        </dxc:ChartControl.Titles>
-                        <dxc:ChartControl.Legends>
-                            <dxc:Legend/>
-                        </dxc:ChartControl.Legends>
-                        <dxc:XYDiagram2D>
-                            <dxc:BarSideBySideSeries2D DisplayName="Annual Statistics" ArgumentDataMember="Argument" ValueDataMember="Value" CrosshairLabelPattern="${V:f2}M"/>
-                        </dxc:XYDiagram2D>
-                    </dxc:ChartControl>
-
-                </Grid>
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="6*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-
-                    </Grid>
-                    <Grid Grid.Column="1">
-
-                    </Grid>
-                    <Grid Grid.Column="2">
-
-                    </Grid>
-
-                </Grid>
-                <Grid Grid.Row="2" Margin="0 10">
+            <!-- 상단바 -->
+            <Grid Grid.Column="1" Background="#FF27262C">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="4*"/>
                         <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-
-                    <Grid Grid.Column="5">
-                        <Button Style="{StaticResource inspection_buttonStyle}" Tag="./img/icons8-save-100.png"
-    Content="갱신" />
-                    </Grid>
-                </Grid>
+                    <Button Grid.Column="1"  Style="{StaticResource menu_horizontal_buttonStyle}"  Tag="./img/icons8-back-100.png"
+                            Content="Back" Click="BackButton_Click" Margin="30 20"/>
+                </Grid >
             </Grid>
         </Grid>
+        <!-- Content -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="4*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <!-- 사이드 바 -->
+            <Grid Grid.Column="0" Background="#FF25275A">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="6*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Button Style="{StaticResource menu_horizontal_buttonStyle}" Tag="./img/icons8-fcg-100.png"
+                            Margin="20 15" Content=" 정보 수정"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Button Style="{StaticResource menu_horizontal_buttonStyle}" Tag="./img/icons8-report-100.png"
+                            Margin="20 15" Content="모니터링 대상 삭제" />
+                </Grid>
+            </Grid>
+            <!-- 내용 -->
+            <DockPanel Grid.Column="1">
+                <dx:DXTabControl>
+                    <dx:DXTabItem
+                        Header="기본정보">
+                    </dx:DXTabItem>
+                    <dx:DXTabItem
+                        Header="그래프" IsSelected="True">
+                        <dxc:ChartControl
+                            Name="chart"
+                            AnimationMode="OnLoad"
+                            CrosshairEnabled="True"
+                            DataSource="{x:Static data:Temperature.Data}">
+                            <dxc:ChartControl.Diagram>
+                                <dxc:XYDiagram2D>
+                                    <!--#region Axes-->
+                                    <dxc:XYDiagram2D.AxisX>
+                                        <dxc:AxisX2D
+                                            GridLinesVisible="True">
+                                            <dxc:AxisX2D.DateTimeScaleOptions>
+                                                <dxc:ContinuousDateTimeScaleOptions />
+                                            </dxc:AxisX2D.DateTimeScaleOptions>
+                                            <dxc:AxisX2D.WholeRange>
+                                                <dxc:Range
+                                                    AutoSideMargins="False"
+                                                    SideMarginsValue="1800000" />
+                                            </dxc:AxisX2D.WholeRange>
+                                        </dxc:AxisX2D>
+                                    </dxc:XYDiagram2D.AxisX>
+                                    <dxc:XYDiagram2D.AxisY>
+                                        <dxc:AxisY2D
+                                                 GridLinesMinorVisible="True">
+                                            <dxc:AxisY2D.WholeRange>
+                                                <dxc:Range
+                                                    dxc:AxisY2D.AlwaysShowZeroLevel="False" />
+                                            </dxc:AxisY2D.WholeRange>
+                                            <dxc:AxisY2D.Title>
+                                                <dxc:AxisTitle
+                                                    Content="Temp" />
+                                            </dxc:AxisY2D.Title>
+                                        </dxc:AxisY2D>
+                                    </dxc:XYDiagram2D.AxisY>
+                                    <!--#endregion-->
+                                    <dxc:LineSeries2D
+                                        AnimationAutoStartMode="SetStartState"
+                                        ArgumentDataMember="Time"
+                                        ValueDataMember="Temp"
+                                        CrosshairLabelPattern="{}{S}: {V}kWt"
+                                        LabelsVisibility="{Binding ElementName=chbShowLabels, Path=IsChecked}">
+                                                                            <dxc:LineSeries2D.Label>
+                                                                                <dxc:SeriesLabel
+                                                ConnectorVisible="False"
+                                                ResolveOverlappingMode="Default" 
+            />
+                                        </dxc:LineSeries2D.Label>
+                                    </dxc:LineSeries2D>
+                                </dxc:XYDiagram2D>
+                            </dxc:ChartControl.Diagram>
+                            <!--#region Titles-->
+                            <dxc:ChartControl.Titles>
+                                <dxc:Title
+            Dock="Top"
+            HorizontalAlignment="Center"
+            Content="Power Consumption per Working Day" />
+                            </dxc:ChartControl.Titles>
+                            <!--#endregion-->
+                        </dxc:ChartControl>
+
+                    </dx:DXTabItem>
+                    <dx:DXTabItem
+                        Header="표">
+                    </dx:DXTabItem>
+                </dx:DXTabControl>
+            </DockPanel>
+        </Grid>
+        
+        
     </Grid>
 </Page>

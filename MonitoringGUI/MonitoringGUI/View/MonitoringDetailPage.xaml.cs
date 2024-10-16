@@ -32,21 +32,7 @@ namespace MonitoringGUI.View
             MonitoringMenuPage monitoring_menu_page = new MonitoringMenuPage();
             NavigationService.Navigate(monitoring_menu_page);
         }
-        private void ListViewItem_Selected(object sender, RoutedEventArgs e)
-        {
-            var item = (ListViewItem)sender;         
-            if (item.Name.Equals("item1"))
-            {
-                Content1.Visibility = Visibility.Visible;
-                Content2.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                Content2.Visibility = Visibility.Visible;
-                Content1.Visibility = Visibility.Hidden;
-            }
 
-        }
     }
     public class DataPoint
     {
