@@ -65,9 +65,10 @@ namespace MonitoringGUI.View
         }
         public void UpdateTempData()
         {
+            
             this.Data = new ObservableCollection<Temp>
             {
-                new Temp { date = new DateTime(2024, 5, 6, 7, 0, 0), temp = 0 },
+                new Temp { date = DateTime.Parse("2024-05-06 07:00:00"), temp = 0 },
                 new Temp { date = new DateTime(2024, 5, 6, 8, 0, 0), temp = 40 },
                 new Temp { date = new DateTime(2024, 5, 6, 9, 0, 0), temp = 22 },
                 new Temp { date = new DateTime(2024, 5, 6, 10, 0, 0), temp = 38 },
