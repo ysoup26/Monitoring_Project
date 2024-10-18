@@ -1,5 +1,5 @@
 ﻿using DevExpress.Mvvm;
-using MonitoringGUI.DataModels;
+using MonitoringGUI.DB_info;
 using System;
 using System.Collections;
 using System.Collections.Generic;

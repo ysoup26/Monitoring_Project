@@ -6,7 +6,7 @@
         xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
         xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts"
         xmlns:local="clr-namespace:MonitoringGUI.View"
-        xmlns:datas="clr-namespace:MonitoringGUI.DataModels"
+        xmlns:db="clr-namespace:MonitoringGUI.DB_info" 
     mc:Ignorable="d" 
       d:DesignHeight="720" d:DesignWidth="1280"
       Title="MonitoringDetailPage">
@@ -208,9 +208,9 @@
                                 <Image Source="{dx:FontIconSource 59255}"/>
                             </Button>
                             <dxc:ChartControl Grid.Row="1"
-                Name="chart"
-                CrosshairEnabled="True"
-                DataSource="{x:Static datas:Temperature.Data}">
+                                Name="chart"
+                                CrosshairEnabled="True"
+                                DataSource="{x:Static db:Temperature.Data}">
                                 <dxc:ChartControl.Diagram>
                                     <dxc:XYDiagram2D>
                                         <!--#region Axes-->

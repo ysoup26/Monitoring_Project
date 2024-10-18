@@ -82,7 +82,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DataModels\Temperature.cs" />
+    <Compile Include="DB_info\AWS.cs" />
+    <Compile Include="DB_info\Temperature.cs" />
     <Compile Include="View\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
