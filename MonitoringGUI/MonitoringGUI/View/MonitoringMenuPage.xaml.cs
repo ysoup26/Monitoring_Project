@@ -52,28 +52,27 @@ namespace MonitoringGUI.View
             //InspectionList.ItemsSource = _list;
             //this.Window_Loaded(sender, e);
         }
-
         //신규 모니터링 등록 버튼
         private void Monitoring_Resister_Button_Click(object sender, RoutedEventArgs e)
         {
             var viewModel = (MonitoringMenuPageViewModel)DataContext;
             string query = "INSERT INTO  " + AWS.target_table + "(name) VALUES('InWPF2')";
             viewModel.MySqlQueryExecuter(query);
-            viewModel.LoadData();
+            viewModel.GetAllTarget();
         }
-
+        // 모니터링 삭제 버튼
         private void Monitoring_Delete_Button_Click(object sender, RoutedEventArgs e)
         {
             var viewModel = (MonitoringMenuPageViewModel)DataContext;
             string query = "DELETE FROM " + AWS.target_table + " WHERE id = 6";
             viewModel.MySqlQueryExecuter(query);
-            viewModel.LoadData();
+            viewModel.GetAllTarget();
         }
+        //모니터링 조회 버튼
         private void Monitoring_Check_Button_Click(object sender, RoutedEventArgs e)
         {
             //InspectionList.ItemsSource = _list;
         }
-
     }
 
     public class MonitoringMenuPageViewModel : INotifyPropertyChanged
@@ -82,13 +81,13 @@ namespace MonitoringGUI.View
 
         public ObservableCollection<MonitoringInfo> data { get; set; }
         public MonitoringMenuPageViewModel() {
-            LoadData();
-            OnPropertyChanged(nameof(data));
+            GetAllTarget(); //데이터 로드
         }
 
         public class MonitoringInfo
         {
             public string Name { get; set; }
+            public int Id { get; set; }
         }
 
         //Do query: Insert, Delete, Update
@@ -96,6 +95,7 @@ namespace MonitoringGUI.View
         {
             try
             {
+                //using이 있는 동안만 연결(끝나고 DB 연결 자동 해제)
                 using (var connection = new MySqlConnection(AWS.url))
                 {
                     connection.Open();
@@ -111,24 +111,11 @@ namespace MonitoringGUI.View
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
-                //return null;
             }
         }
-        
-        //public bool CloseDBConnection()
-        //{
-        //    try
-        //    {
-        //        App.connec
-        //    }
-        //}
-
-
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        public void LoadData()
+          
+        //모니터링 대상 전체 출력: query select
+        public void GetAllTarget()
         {
             try
             {
@@ -143,11 +130,8 @@ namespace MonitoringGUI.View
                         while (reader.Read())
                         {
                             // 데이터 처리 로직
-                            //text_block.Text += reader["name"].ToString() + "\n";
                             list.Add(new MonitoringInfo { Name = reader["name"].ToString() });
-                            //Console.WriteLine(reader["name"].ToString());
                         }
-                        //return list;
                         data = list;
                         OnPropertyChanged(nameof(data));
                     }
@@ -156,8 +140,11 @@ namespace MonitoringGUI.View
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
-                //return null;
             }
+        }
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
