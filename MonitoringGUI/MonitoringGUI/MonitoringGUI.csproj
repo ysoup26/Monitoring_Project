@@ -234,6 +234,8 @@
     <Resource Include="View\img\icons8-user-100.png" />
     <Resource Include="View\img\sample.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="View\img\memory_sample.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

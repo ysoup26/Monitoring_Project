@@ -111,7 +111,8 @@
                                     <RowDefinition Height="0.8*"/>
                                 </Grid.RowDefinitions>
                                 <Grid Grid.Row="0" Margin="8" Background="White">
-                                    <Image Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}" />
+                                    <Image Source="./img/memory_sample.jpg" />
+                                    <!-- "{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag} -->
                                 </Grid>
                                 <ContentPresenter Grid.Row="1" HorizontalAlignment="Center" />
                             </Grid>
@@ -207,8 +208,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Button Style="{StaticResource inspection_buttonStyle}" Tag="./img/icons8-test-100.png"
-                                    
+                            <Button Style="{StaticResource inspection_buttonStyle}" Tag="{Binding Id}"
                                      Click="Monitoring_Button_Click">
                                 <Grid>
                                     <Grid.RowDefinitions>

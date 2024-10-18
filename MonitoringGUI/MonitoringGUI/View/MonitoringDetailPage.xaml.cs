@@ -34,6 +34,7 @@ namespace MonitoringGUI.View
         public MonitoringDetailPage(string id)
         {
             InitializeComponent();
+            TEST.Text = id;
             this.DataContext = new MonitoringDetailPageViewModel(id);
 
         }
@@ -52,7 +53,7 @@ namespace MonitoringGUI.View
 
     public class Temp
     {
-        public DateTime date {  get; set; }
+        public DateTime time {  get; set; }
         public double temp { get; set; }
         
     }
@@ -65,6 +66,7 @@ namespace MonitoringGUI.View
         public MonitoringInfo info { get; set; }
 
         public ObservableCollection<MonitoringInfo> data { get; set; }
+        public ObservableCollection<Temp> Temp_Data { get; set; }
         public MonitoringDetailPageViewModel()
         {
             this.Data = GetTempData();
@@ -139,6 +141,34 @@ namespace MonitoringGUI.View
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
+        //모니터링 대상 전체 출력: query select
+        public void GetAllTemp()
+        {
+            try
+            {
+                using (var connection = new MySqlConnection(AWS.url))
+                {
+                    connection.Open();
+                    string query = "SELECT * FROM " + AWS.temp_table+" WHERE target_id = "+info.Id;
+                    var command = new MySqlCommand(query, connection);
+                    Temp_Data = new ObservableCollection<Temp> { };
+                    using (var reader = command.ExecuteReader())
+                    {
+
+                        while (reader.Read())
+                        {
+                            // 데이터 처리 로직
+                            Temp_Data.Add(new Temp { time = reader["time"].TryConvertToDateTime(), temp = Convert.ToDouble(reader["temp"]), });
+                        }
+                        OnPropertyChanged(nameof(Temp_Data));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
         //모니터링 대상 단일 출력
         public void GetTarget(string id)
         {
@@ -177,11 +207,11 @@ namespace MonitoringGUI.View
         {
             return new ObservableCollection<Temp>
             {
-                new Temp{date = new DateTime(2024, 5, 6, 7, 0, 0), temp=25},
-                new Temp{date = new DateTime(2024, 5, 6, 8, 0, 0), temp=30},
-                new Temp{date = new DateTime(2024, 5, 6, 9, 0, 0), temp=20},
-                new Temp{date = new DateTime(2024, 5, 6, 10, 0, 0), temp=28},
-                new Temp{date = new DateTime(2024, 5, 6, 11, 0, 0), temp=35},
+                new Temp{time = new DateTime(2024, 5, 6, 7, 0, 0), temp=25},
+                new Temp{time = new DateTime(2024, 5, 6, 8, 0, 0), temp=30},
+                new Temp{time = new DateTime(2024, 5, 6, 9, 0, 0), temp=20},
+                new Temp{time = new DateTime(2024, 5, 6, 10, 0, 0), temp=28},
+                new Temp{time = new DateTime(2024, 5, 6, 11, 0, 0), temp=35},
             };
         }
         public void UpdateTempData()
@@ -189,11 +219,11 @@ namespace MonitoringGUI.View
             
             this.Data = new ObservableCollection<Temp>
             {
-                new Temp { date = DateTime.Parse("2024-05-06 07:00:00"), temp = 0 },
-                new Temp { date = new DateTime(2024, 5, 6, 8, 0, 0), temp = 40 },
-                new Temp { date = new DateTime(2024, 5, 6, 9, 0, 0), temp = 22 },
-                new Temp { date = new DateTime(2024, 5, 6, 10, 0, 0), temp = 38 },
-                new Temp { date = new DateTime(2024, 5, 6, 11, 0, 0), temp = 50 },
+                new Temp { time = DateTime.Parse("2024-05-06 07:00:00"), temp = 0 },
+                new Temp { time = new DateTime(2024, 5, 6, 8, 0, 0), temp = 40 },
+                new Temp { time = new DateTime(2024, 5, 6, 9, 0, 0), temp = 22 },
+                new Temp { time = new DateTime(2024, 5, 6, 10, 0, 0), temp = 38 },
+                new Temp { time = new DateTime(2024, 5, 6, 11, 0, 0), temp = 50 },
             };
             OnPropertyChanged(nameof(Data));
         }

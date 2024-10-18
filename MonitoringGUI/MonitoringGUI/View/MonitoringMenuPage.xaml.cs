@@ -44,9 +44,9 @@ namespace MonitoringGUI.View
         //세부 모니터링을 선택하는 버튼
         private void Monitoring_Button_Click(object sender, RoutedEventArgs e)
         {
-            //var button = sender as Button;
-            //var id = button.DataContext.ToString();
-            MonitoringDetailPage monitoring_detail_page = new MonitoringDetailPage("1");
+            var button = sender as Button;
+            var id = button.Tag.ToString(); // YourDataModel은 실제 모델의 타입으로 변경
+            MonitoringDetailPage monitoring_detail_page = new MonitoringDetailPage(id);
             NavigationService.Navigate(monitoring_detail_page);
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
