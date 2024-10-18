@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MonitoringGUI.DB_info;
+using System.ComponentModel;
+using System.Collections.ObjectModel;
+using Google.Protobuf.Collections;
+using System.Diagnostics;
+using DevExpress.Mvvm.Native;
 
 namespace MonitoringGUI.View
 {
@@ -21,22 +28,19 @@ namespace MonitoringGUI.View
     /// </summary>
     public partial class MonitoringMenuPage : Page
     {
-        private List<MonitoringInfo> _list;
+        //private List<MonitoringInfo> _list;
         public MonitoringMenuPage()
         {
             InitializeComponent();
-            _list = new List<MonitoringInfo> {
-                new MonitoringInfo{Name="발사통제기A" },
-                new MonitoringInfo{Name="발사통제기B"},
-                new MonitoringInfo{Name="발사통제기C"},
-                new MonitoringInfo{Name="발사통제기D"},
-                };
+            this.DataContext = new MonitoringMenuPageViewModel();
         }
+        //메뉴 페이지로 돌아가는 버픈
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             MenuPage menu_page = new MenuPage();
             NavigationService.Navigate(menu_page);
         }
+        //세부 모니터링을 선택하는 버튼
         private void Monitoring_Button_Click(object sender, RoutedEventArgs e)
         {
             MonitoringDetailPage monitoring_detail_page = new MonitoringDetailPage();
@@ -44,41 +48,116 @@ namespace MonitoringGUI.View
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            InspectionList.ItemsSource = _list;
+            //_list = LoadData();
+            //InspectionList.ItemsSource = _list;
+            //this.Window_Loaded(sender, e);
         }
 
-        private void ListViewItem_Selected(object sender, RoutedEventArgs e)
+        //신규 모니터링 등록 버튼
+        private void Monitoring_Resister_Button_Click(object sender, RoutedEventArgs e)
         {
-            var item = (ListViewItem)sender;
-            item.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF25275A"));
-            if (item.Name.Equals("Inspection1"))
-            {
-                _list = new List<MonitoringInfo> {
-                new MonitoringInfo{Name="발사통제기A" },
-                new MonitoringInfo{Name="발사통제기B"},
-                new MonitoringInfo{Name="발사통제기C"},
-                new MonitoringInfo{Name="발사통제기D"},
-                };
-                //foreach(var l in _list)
-                // {
-                //     Inspection_Select_Grid.s
-                // }
-            }
-            else
-            {
-                _list = new List<MonitoringInfo> {
-                new MonitoringInfo{Name="유도탄통제기A" },
-                new MonitoringInfo{Name="유도탄통제기B"},
-                new MonitoringInfo{Name="유도탄통제기C"},
-                new MonitoringInfo{Name="유도탄통제기D"},
-             };
-            }
-
-            InspectionList.ItemsSource = _list;
+            var viewModel = (MonitoringMenuPageViewModel)DataContext;
+            string query = "INSERT INTO  " + AWS.target_table + "(name) VALUES('InWPF2')";
+            viewModel.MySqlQueryExecuter(query);
+            viewModel.LoadData();
         }
+
+        private void Monitoring_Delete_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var viewModel = (MonitoringMenuPageViewModel)DataContext;
+            string query = "DELETE FROM " + AWS.target_table + " WHERE id = 6";
+            viewModel.MySqlQueryExecuter(query);
+            viewModel.LoadData();
+        }
+        private void Monitoring_Check_Button_Click(object sender, RoutedEventArgs e)
+        {
+            //InspectionList.ItemsSource = _list;
+        }
+
     }
-    public class MonitoringInfo
+
+    public class MonitoringMenuPageViewModel : INotifyPropertyChanged
     {
-        public string Name { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public ObservableCollection<MonitoringInfo> data { get; set; }
+        public MonitoringMenuPageViewModel() {
+            LoadData();
+            OnPropertyChanged(nameof(data));
+        }
+
+        public class MonitoringInfo
+        {
+            public string Name { get; set; }
+        }
+
+        //Do query: Insert, Delete, Update
+        public void MySqlQueryExecuter(string query)
+        {
+            try
+            {
+                using (var connection = new MySqlConnection(AWS.url))
+                {
+                    connection.Open();
+                    var command = new MySqlCommand(query, connection);
+                    if (command.ExecuteNonQuery() == 1)
+                    {
+                        Debug.WriteLine("값 저장 성공");
+                    }
+                    else
+                        Debug.WriteLine("값 저장 실패");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+                //return null;
+            }
+        }
+        
+        //public bool CloseDBConnection()
+        //{
+        //    try
+        //    {
+        //        App.connec
+        //    }
+        //}
+
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        public void LoadData()
+        {
+            try
+            {
+                using (var connection = new MySqlConnection(AWS.url))
+                {
+                    connection.Open();
+                    string query = "SELECT * FROM " + AWS.target_table;
+                    var command = new MySqlCommand(query, connection);
+                    ObservableCollection<MonitoringInfo> list = new ObservableCollection<MonitoringInfo> { };
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            // 데이터 처리 로직
+                            //text_block.Text += reader["name"].ToString() + "\n";
+                            list.Add(new MonitoringInfo { Name = reader["name"].ToString() });
+                            //Console.WriteLine(reader["name"].ToString());
+                        }
+                        //return list;
+                        data = list;
+                        OnPropertyChanged(nameof(data));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+                //return null;
+            }
+        }
     }
 }

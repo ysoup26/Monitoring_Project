@@ -6,7 +6,6 @@
       xmlns:local="clr-namespace:MonitoringGUI.View"
       mc:Ignorable="d" 
       d:DesignHeight="720" d:DesignWidth="1280"
-      Loaded="Window_Loaded"
       Title="MonitoringMenuPage">
 
     <Page.Resources>
@@ -160,44 +159,28 @@
         </Grid>
         <Border Grid.Column="0" Grid.Row="1" Background="#FF27262C"  BorderBrush="Transparent" BorderThickness="0" >
             <Grid >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition  Height="4*"/>
-                    <RowDefinition Height="4*"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <ListView Background="#FF27262C" BorderBrush="Transparent">
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="Foreground" Value="White"/>
-                                <Setter Property="Background" Value="#FF27262C"/>
-                                <Setter Property="Margin" Value="5"/>
-                                <Setter Property="Padding" Value="5"/>
-                                <EventSetter Event="Selected" Handler="ListViewItem_Selected"/>
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                        <ListViewItem Content="온도" x:Name="Inspection1" IsSelected="True"/>
-                        <ListViewItem Content="습도" x:Name="Inspection2"/>
-                    </ListView>
-                </Grid>
-                <Grid Grid.Row="1">
-
-
-                </Grid>
                 <!-- 메뉴 Navigation -->
-                <Grid Grid.Row="2" >
+                <Grid >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
+                        <RowDefinition Height="4*"/>
                     </Grid.RowDefinitions>
-                    <Grid Grid.Row="1">
+                    <Grid Grid.Row="0">
                         <Button Style="{StaticResource menu_horizontal_buttonStyle}" Tag="./img/icons8-fcg-100.png"
-                       Content="모니터링 등록"/>
+                       Content="모니터링 등록" Click="Monitoring_Resister_Button_Click"/>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Button Style="{StaticResource menu_horizontal_buttonStyle}" Tag="./img/icons8-report-100.png"
+                            Content="모니터링 삭제"  Click="Monitoring_Delete_Button_Click"/>
                     </Grid>
                     <Grid Grid.Row="2">
                         <Button Style="{StaticResource menu_horizontal_buttonStyle}" Tag="./img/icons8-report-100.png"
-                Content="모니터링 삭제" />
+                            Content="모니터링 조회" Click="Monitoring_Check_Button_Click" />
+                    </Grid>
+                    <Grid Grid.Row="3" Background="White" Margin="20">
+                        <TextBlock x:Name="text_block" Text="{Binding data}"/>
                     </Grid>
                 </Grid>
             </Grid>
@@ -215,7 +198,7 @@
         </Grid>
         <Grid Grid.Column="1" Grid.Row="1" x:Name="Inspection_Select_Grid">
             <Grid Background="#FF25275A">
-                <ItemsControl x:Name="InspectionList">
+                <ItemsControl x:Name="InspectionList" ItemsSource="{Binding data}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <UniformGrid Rows="2" 

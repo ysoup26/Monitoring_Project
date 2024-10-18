@@ -34,9 +34,8 @@ namespace MonitoringGUI.View
                     NavigationService.Navigate(test_menu_page);
                     break;
                 case "monitoring":
-                    // MonitoringMenuPage monitoring_menu_page = new MonitoringMenuPage();
-                    MonitoringDetailPage monitoring_menu_page = new MonitoringDetailPage();
-
+                    MonitoringMenuPage monitoring_menu_page = new MonitoringMenuPage();
+                    //MonitoringDetailPage monitoring_menu_page = new MonitoringDetailPage();
                     NavigationService.Navigate(monitoring_menu_page);
                     break;
                 default:
