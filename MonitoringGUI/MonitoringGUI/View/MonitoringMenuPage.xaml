@@ -121,7 +121,7 @@
             </Setter>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Background" Value="#FF445BF4"/>
-            <Setter Property="Margin" Value="50 30"/>
+            <Setter Property="Margin" Value="55 35"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Cursor" Value="Hand" />
             <Style.Triggers>
@@ -134,7 +134,7 @@
                             </LinearGradientBrush>
                         </Setter.Value>
                     </Setter>
-                    <Setter Property="Margin" Value="40 20"/>
+                    <Setter Property="Margin" Value="45 25"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -207,17 +207,14 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Button Style="{StaticResource inspection_buttonStyle}" Tag="./img/icons8-test-50.png"
-                                                                     Click="Monitoring_Button_Click">
+                            <Button Style="{StaticResource inspection_buttonStyle}" Tag="./img/icons8-test-100.png"
+                                    
+                                     Click="Monitoring_Button_Click">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="1*"/>
-                                        <RowDefinition Height="1*"/>
-                                        <RowDefinition Height="1*"/>
                                     </Grid.RowDefinitions>
                                     <TextBlock Grid.Row="0" HorizontalAlignment="Center" Text="{Binding Name}"></TextBlock>
-                                    <TextBlock Grid.Row="1" HorizontalAlignment="Center" Text="ABCDEFG"></TextBlock>
-                                    <TextBlock Grid.Row="2" HorizontalAlignment="Center" Text="1234-12-1234"></TextBlock>
 
                                 </Grid>
                             </Button>

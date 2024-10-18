@@ -39,11 +39,14 @@ namespace MonitoringGUI.View
         {
             MenuPage menu_page = new MenuPage();
             NavigationService.Navigate(menu_page);
+            //https://shine10e.tistory.com/68 이전 페이지로 돌아올 때 추가 처리를 해야되면 참고 
         }
         //세부 모니터링을 선택하는 버튼
         private void Monitoring_Button_Click(object sender, RoutedEventArgs e)
         {
-            MonitoringDetailPage monitoring_detail_page = new MonitoringDetailPage();
+            //var button = sender as Button;
+            //var id = button.DataContext.ToString();
+            MonitoringDetailPage monitoring_detail_page = new MonitoringDetailPage("1");
             NavigationService.Navigate(monitoring_detail_page);
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -130,7 +133,7 @@ namespace MonitoringGUI.View
                         while (reader.Read())
                         {
                             // 데이터 처리 로직
-                            list.Add(new MonitoringInfo { Name = reader["name"].ToString() });
+                            list.Add(new MonitoringInfo { Name = reader["name"].ToString(), Id = int.Parse(reader["id"].ToString()) });
                         }
                         data = list;
                         OnPropertyChanged(nameof(data));
