@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
       xmlns:local="clr-namespace:MonitoringGUI.View"
       mc:Ignorable="d" 
       d:DesignHeight="720" d:DesignWidth="1280"
@@ -20,7 +21,10 @@
                                     <ColumnDefinition Width="1*"/>
                                     <ColumnDefinition Width="2*"/>
                                 </Grid.ColumnDefinitions>
-                                <Image Grid.Column="0" Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}" />
+                                <Grid Grid.Column="0">
+                                    <Image Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}" />
+
+                                </Grid>
                                 <ContentPresenter Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Grid>
                         </Border>
@@ -107,7 +111,7 @@
                         <Border Background="{TemplateBinding Background}" CornerRadius="5">
                             <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="2*"/>
+                                    <RowDefinition Height="1.5*"/>
                                     <RowDefinition Height="0.8*"/>
                                 </Grid.RowDefinitions>
                                 <Grid Grid.Row="0" Margin="8" Background="White">
@@ -169,11 +173,11 @@
                         <RowDefinition Height="4*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
-                        <Button Style="{StaticResource menu_horizontal_buttonStyle}" Tag="./img/icons8-fcg-100.png"
+                        <Button Style="{StaticResource menu_horizontal_buttonStyle}" Tag="{dx:FontIconSource 59152, ColorName=White}"
                        Content="모니터링 등록" Click="Monitoring_Resister_Button_Click"/>
                     </Grid>
                     <Grid Grid.Row="1">
-                        <Button Style="{StaticResource menu_horizontal_buttonStyle}" Tag="./img/icons8-report-100.png"
+                        <Button Style="{StaticResource menu_horizontal_buttonStyle}" Tag="{dx:FontIconSource 59213, ColorName=White}"
                             Content="모니터링 삭제"  Click="Monitoring_Delete_Button_Click"/>
                     </Grid>
                 </Grid>
@@ -185,7 +189,7 @@
                     <ColumnDefinition Width="4*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="1"  Style="{StaticResource menu_horizontal_buttonStyle}"  Tag="./img/icons8-back-100.png"
+                <Button Grid.Column="1"  Style="{StaticResource menu_horizontal_buttonStyle}"  Tag="{dx:FontIconSource 59243, ColorName=White}"
                 Content="Back" Click="BackButton_Click" Margin="30 20"/>
             </Grid>
 

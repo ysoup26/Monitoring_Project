@@ -82,6 +82,11 @@ namespace MonitoringGUI.View
         {
             //InspectionList.ItemsSource = _list;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 
     public class MonitoringMenuPageViewModel : INotifyPropertyChanged

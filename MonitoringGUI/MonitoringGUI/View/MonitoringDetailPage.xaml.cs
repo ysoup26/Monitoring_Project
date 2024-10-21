@@ -110,6 +110,12 @@ namespace MonitoringGUI.View
         public double temp { get; set; }
         
     }
+    public class Hum
+    {
+        public DateTime time { get; set; }
+        public double hum { get; set; }
+
+    }
 
     public class MonitoringDetailPageViewModel : INotifyPropertyChanged
     {
@@ -119,6 +125,7 @@ namespace MonitoringGUI.View
 
         public ObservableCollection<MonitoringInfo> data { get; set; }
         public ObservableCollection<Temp> Temp_Data { get; set; }
+        public ObservableCollection<Hum> Hum_Data { get; set; }
         public MonitoringDetailPageViewModel()
         {
             this.Data = GetTempData();
@@ -231,6 +238,38 @@ namespace MonitoringGUI.View
                             Temp_Data.Add(new Temp { time = reader["time"].TryConvertToDateTime(), temp = Convert.ToDouble(reader["value"]), });
                         }
                         OnPropertyChanged(nameof(Temp_Data));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+        //모니터링 대상 전체 출력: query select
+        public void GetAllHum()
+        {
+            try
+            {
+                using (var connection = new MySqlConnection(AWS.url))
+                {
+                    connection.Open();
+                    string query = "SELECT * FROM " + AWS.hum_table + " WHERE hum_target_id = " + info.Id;//+id;
+                    var command = new MySqlCommand(query, connection);
+                    Hum_Data = new ObservableCollection<Hum> { };
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (!reader.Read())
+                        {
+                            MessageBox.Show("조회된 데이터가 없습니다.");
+                            return;
+                        }
+                        while (reader.Read())
+                        {
+                            // 데이터 처리 로직
+                            Hum_Data.Add(new Hum { time = reader["time"].TryConvertToDateTime(), hum = Convert.ToDouble(reader["value"]), });
+                        }
+                        OnPropertyChanged(nameof(Hum_Data));
                     }
                 }
             }
