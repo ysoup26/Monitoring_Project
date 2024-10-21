@@ -1,0 +1,161 @@
+﻿<Window x:Class="MonitoringGUI.View.EditPopup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MonitoringGUI.View"
+        mc:Ignorable="d"
+        Title="모니터링 등록" Height="600" Width="400"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0"
+          CornerRadius="2"
+          GlassFrameThickness="0"
+          NonClientFrameEdges="None"
+          ResizeBorderThickness="3"/>
+    </WindowChrome.WindowChrome>
+    <!-- 미리 구현해둔 리소스 -->
+    <Window.Resources>
+        <!--textBox -->
+        <Style x:Key="textBoxStyle" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="border" Background="White" BorderBrush="#FF93DFFF" BorderThickness="1.5"  CornerRadius="5" Padding="10 18">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
+        <!-- 심플 버튼 -->
+        <Style x:Key="simple_buttonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5" Padding="10">
+                            <Grid>
+                                <ContentPresenter Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="#FF4044ED" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF2629B7"/>
+                </Trigger>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="#FF2629B7"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Border x:Name="border" BorderBrush="#FF4044ED" BorderThickness="5">
+        <Grid Background="#FF27262C">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="5*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <!-- 제목 -->
+            <Grid Grid.Column="1" Grid.Row="0" Margin="10">
+                <TextBlock Text="모니터링 등록" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="36" FontFamily="Yu Gothic UI Light" />
+            </Grid>
+            <!-- 로그인 컴포넌트 -->
+            <Grid Grid.Column="1" Grid.Row="1" Margin="30">
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                    </Style>
+                </Grid.Style>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="0.5*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <!-- ID 입력-->
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="0.5*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <!-- name TextBox -->
+                        <TextBox x:Name="name" Style="{StaticResource textBoxStyle}" IsKeyboardFocusedChanged="Error_Hidden"/>
+                        <!-- name TextBlock: Placeholder-->
+                        <TextBlock IsHitTestVisible="False" Padding="15 18" Text="모니터링 명" VerticalAlignment="Top" Foreground="Gray">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text,ElementName=name}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+                    <!-- ID 경고 문구 -->
+                    <Grid Grid.Row="1" Margin="5">
+                        <TextBlock Text="*모니터링 명을 입력해주세요." Visibility="Hidden" x:Name="nameError" Foreground="IndianRed"/>
+                    </Grid>
+                </Grid>
+                <!-- 온도 측정 여부-->
+                <Grid Grid.Row="1" Height="50">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Content="온도(temp)" VerticalAlignment="Center" Foreground="white"></Label>
+                    <RadioButton Grid.Column="1" GroupName="temp" x:Name="is_temp_check" Content="측정함" VerticalAlignment="Center" Foreground="White"></RadioButton>
+                    <RadioButton Grid.Column="2" GroupName="temp" IsChecked="true" VerticalAlignment="Center" Content="측정 안 함" Foreground="White"/>
+                </Grid>
+                <!-- 습도 측정 여부-->
+                <Grid Grid.Row="2" Height="50">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Content="습도(hum)" VerticalAlignment="Center" Foreground="white"></Label>
+                    <RadioButton Grid.Column="1" GroupName="hum" x:Name="is_hum_check" Content="측정함" VerticalAlignment="Center" Foreground="White"/>
+                    <RadioButton Grid.Column="2" GroupName="hum" Content="측정 안 함" VerticalAlignment="Center" IsChecked="True" Foreground="White"/>
+                </Grid>
+                <!-- 로그인/종료 버튼 -->
+                <Grid Grid.Row="4" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" Margin="0 0 10 0">
+                            <Button Content="수정"
+                Style="{StaticResource simple_buttonStyle}"
+                Click="EditButton_Click"/>
+                        </Grid>
+                        <Grid Grid.Column="1" Margin="10 0 0 0">
+                            <Button Content="취소"
+                Style="{StaticResource simple_buttonStyle}"
+                Click="CancleButton_Click"/>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+
+</Window>

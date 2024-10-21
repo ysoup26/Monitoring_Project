@@ -48,7 +48,31 @@ namespace MonitoringGUI.View
             var viewModel = (MonitoringDetailPageViewModel)DataContext;
             viewModel.UpdateTempData();
         }
+        // 모니터링 삭제 버튼
+        private void Monitoring_Delete_Button_Click(object sender, RoutedEventArgs e)
+        {
+            
+            var viewModel = (MonitoringDetailPageViewModel)DataContext;
+            string query = "DELETE FROM " + AWS.target_table + " WHERE id = "+ viewModel.info.Id;
+            if(MessageBox.Show("정말 삭제하시겠습니까?\n","모니터링 삭제", MessageBoxButton.YesNo) == MessageBoxResult.No)
+            {
+                return;
+            }
+            if(viewModel.MySqlQueryExecuter(query))
+                BackButton_Click(sender, e);
+        }
+        //모니터링 수정 버튼
+        private void Monitoring_Edit_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var viewModel = (MonitoringDetailPageViewModel)DataContext;
+            EditPopup editPopup = new EditPopup(viewModel.info.Name, viewModel.info.Temp, viewModel.info.Hum, viewModel.info.Id);
+            if (editPopup.ShowDialog() == true)
+            {
+                viewModel.MySqlQueryExecuter(editPopup.query);
+                viewModel.GetAllTarget();
+            }
 
+        }
         //tab Item이 선택될 때 각각 DB 접근
         private void DXTabControl_SelectionChanged(object sender, DevExpress.Xpf.Core.TabControlSelectionChangedEventArgs e)
         {
@@ -63,10 +87,13 @@ namespace MonitoringGUI.View
                 {
                     case "그래프":
                         break;
-                    case "표":
+                    case "리스트":
                         break;
-                    case "온도":
+                    case "온도 그래프":
                         viewModel.GetAllTemp();
+                        break;
+                    case "습도 그래프":
+                        viewModel.GetAllHum();
                         break;
                     default:
                         viewModel.GetTarget();
@@ -83,7 +110,6 @@ namespace MonitoringGUI.View
         public double temp { get; set; }
         
     }
-
 
     public class MonitoringDetailPageViewModel : INotifyPropertyChanged
     {
@@ -119,7 +145,7 @@ namespace MonitoringGUI.View
         }
 
         //Do query: Insert, Delete, Update
-        public void MySqlQueryExecuter(string query)
+        public bool MySqlQueryExecuter(string query)
         {
             try
             {
@@ -128,17 +154,27 @@ namespace MonitoringGUI.View
                 {
                     connection.Open();
                     var command = new MySqlCommand(query, connection);
+                    
                     if (command.ExecuteNonQuery() == 1)
                     {
                         Debug.WriteLine("값 저장 성공");
+                        MessageBox.Show("성공");
+                        return true;
                     }
                     else
+                    {
                         Debug.WriteLine("값 저장 실패");
+                        MessageBox.Show("실패");
+                        return false;
+                    }
+                        
+
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
+                return false;
             }
         }
 

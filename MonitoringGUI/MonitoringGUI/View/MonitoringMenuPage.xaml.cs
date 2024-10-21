@@ -58,10 +58,16 @@ namespace MonitoringGUI.View
         //신규 모니터링 등록 버튼
         private void Monitoring_Resister_Button_Click(object sender, RoutedEventArgs e)
         {
-            var viewModel = (MonitoringMenuPageViewModel)DataContext;
-            string query = "INSERT INTO  " + AWS.target_table + "(name) VALUES('InWPF2')";
-            viewModel.MySqlQueryExecuter(query);
-            viewModel.GetAllTarget();
+            RegisterPopup registerPopup = new RegisterPopup();
+            if (registerPopup.ShowDialog() == true)
+            {
+                MessageBox.Show(registerPopup.query);
+                var viewModel = (MonitoringMenuPageViewModel)DataContext;
+                //string query = "INSERT INTO  " + AWS.target_table + "(name) VALUES('InWPF2')";
+                viewModel.MySqlQueryExecuter(registerPopup.query);
+                viewModel.GetAllTarget();
+            }
+            
         }
         // 모니터링 삭제 버튼
         private void Monitoring_Delete_Button_Click(object sender, RoutedEventArgs e)

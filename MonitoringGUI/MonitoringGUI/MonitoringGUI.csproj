@@ -136,6 +136,9 @@
     </ApplicationDefinition>
     <Compile Include="DB_info\AWS.cs" />
     <Compile Include="DB_info\Temperature.cs" />
+    <Compile Include="View\EditPopup.xaml.cs">
+      <DependentUpon>EditPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
@@ -147,6 +150,9 @@
     </Compile>
     <Compile Include="View\MonitoringMenuPage.xaml.cs">
       <DependentUpon>MonitoringMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RegisterPopup.xaml.cs">
+      <DependentUpon>RegisterPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TestDetailPage.xaml.cs">
       <DependentUpon>TestDetailPage.xaml</DependentUpon>
@@ -166,6 +172,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\EditPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -181,6 +191,10 @@
     <Page Include="View\MonitoringMenuPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\RegisterPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TestDetailPage.xaml">
       <SubType>Designer</SubType>

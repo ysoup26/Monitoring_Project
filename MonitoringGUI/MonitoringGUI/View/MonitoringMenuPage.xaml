@@ -176,13 +176,6 @@
                         <Button Style="{StaticResource menu_horizontal_buttonStyle}" Tag="./img/icons8-report-100.png"
                             Content="모니터링 삭제"  Click="Monitoring_Delete_Button_Click"/>
                     </Grid>
-                    <Grid Grid.Row="2">
-                        <Button Style="{StaticResource menu_horizontal_buttonStyle}" Tag="./img/icons8-report-100.png"
-                            Content="모니터링 조회" Click="Monitoring_Check_Button_Click" />
-                    </Grid>
-                    <Grid Grid.Row="3" Background="White" Margin="20">
-                        <TextBlock x:Name="text_block" Text="{Binding data}"/>
-                    </Grid>
                 </Grid>
             </Grid>
         </Border>

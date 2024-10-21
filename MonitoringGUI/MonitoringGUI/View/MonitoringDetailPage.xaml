@@ -132,13 +132,13 @@
                 <Grid Grid.Row="0">
                     <Button Grid.Row="0" Margin="10"
                             HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent" Click="ChartUpdateButton_Click">
-                        <Image Source="{dx:FontIconSource 59720, ColorName=White}"/>
+                        
                     </Button>
                 </Grid>
                 <Button Grid.Row="1" Style="{StaticResource icon_horizontal_buttonStyle}" Tag="./img/icons8-save-100.png" 
-                        Content="정보 수정" Margin="10"/>
+                        Content="정보 수정" Margin="10" Click="Monitoring_Edit_Button_Click"/>
                 <Button Grid.Row="2" Style="{StaticResource icon_horizontal_buttonStyle}" Tag="./img/icons8-save-100.png" 
-                        Content="모니터링 삭제" Margin="10" />
+                        Content="모니터링 삭제" Margin="10" Click="Monitoring_Delete_Button_Click"/>
 
                 <Grid Grid.Row="1">
                     <!--
@@ -172,10 +172,6 @@
                                     <RowDefinition Height="5*"/>
                                     <RowDefinition Height="1*"/>
                                 </Grid.RowDefinitions>
-                                <Button Grid.Row="0"
-                                        HorizontalAlignment="Right" BorderBrush="Transparent" Click="ChartUpdateButton_Click">
-                                    <Image Source="{dx:FontIconSource 59255}"/>
-                                </Button>
                                 <Grid Grid.Row="1" Margin="20">
                                     <Image Source="./img/memory_sample.jpg"/>
                                 </Grid>
@@ -194,43 +190,43 @@
                                     <ColumnDefinition Width="1*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid Grid.Row="0" Grid.Column="0"  VerticalAlignment="Center">
-                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="모니터링 이름"></TextBlock>
+                                    <TextBlock  Text="모니터링 이름" FontWeight="Bold"></TextBlock>
                                 </Grid>
                                 <Grid Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
-                                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding info.Name}"></TextBlock>
+                                    <TextBlock Text="{Binding info.Name}"></TextBlock>
                                 </Grid>
                                 <Grid Grid.Row="0" Grid.Column="2"  VerticalAlignment="Center">
-                                    <TextBlock Text="모니터링 아이디"></TextBlock>
+                                    <TextBlock Text="모니터링 ID" FontWeight="Bold"></TextBlock>
                                 </Grid>
                                 <Grid Grid.Row="0" Grid.Column="3"  VerticalAlignment="Center">
-                                    <TextBlock Grid.Row="0" Grid.Column="3" Text="{Binding info.Id}"></TextBlock>
+                                    <TextBlock Text="{Binding info.Id}"></TextBlock>
                                 </Grid>
                                 <Grid Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">
-                                    <TextBlock Text="모니터링 생성일"></TextBlock>
+                                    <TextBlock Text="모니터링 생성일" FontWeight="Bold"></TextBlock>
                                 </Grid>
                                 <Grid Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="2" VerticalAlignment="Center">
                                     <TextBlock Text="{Binding info.Time}"></TextBlock>
                                 </Grid>
                                 <Grid Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">
-                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="온도 센서"/>
+                                    <TextBlock Text="온도 측정 유무" FontWeight="Bold"/>
                                 </Grid>
                                 <Grid Grid.Row="2" Grid.Column="1" VerticalAlignment="Center">
                                     <TextBlock Text="{Binding info.Temp}"></TextBlock>
                                 </Grid>
                                 <Grid Grid.Row="2" Grid.Column="2" VerticalAlignment="Center">
-                                    <TextBlock Grid.Row="2" Grid.Column="2" Text="습도 센서 유무"></TextBlock>
+                                    <TextBlock Text="습도 측정 유무" FontWeight="Bold"></TextBlock>
                                 </Grid>
                                 <Grid Grid.Row="2" Grid.Column="3" VerticalAlignment="Center">
                                     <TextBlock Text="{Binding info.Hum}"></TextBlock>
                                 </Grid>
                                 <Grid Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">
-                                    <TextBlock Text="최근 온도"></TextBlock>
+                                    <TextBlock Text="최근 온도" FontWeight="Bold"></TextBlock>
                                 </Grid>
                                 <Grid Grid.Row="3" Grid.Column="1" VerticalAlignment="Center">
                                     <TextBlock Text="{Binding info.Temp}"></TextBlock>
                                 </Grid>
                                 <Grid Grid.Row="3" Grid.Column="2" VerticalAlignment="Center">
-                                    <TextBlock Text="최근 습도"></TextBlock>
+                                    <TextBlock Text="최근 습도" FontWeight="Bold"></TextBlock>
                                 </Grid>
                                 <Grid Grid.Row="3" Grid.Column="3" VerticalAlignment="Center">
                                     <TextBlock Text="{Binding info.Hum}"></TextBlock>
