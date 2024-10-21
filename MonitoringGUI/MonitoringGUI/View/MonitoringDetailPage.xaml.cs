@@ -1,4 +1,5 @@
 ﻿using DevExpress.Mvvm;
+using DevExpress.Xpf.Core;
 using DevExpress.Xpf.Editors.Helpers;
 using MonitoringGUI.DB_info;
 using MySql.Data.MySqlClient;
@@ -34,9 +35,7 @@ namespace MonitoringGUI.View
         public MonitoringDetailPage(string id)
         {
             InitializeComponent();
-            TEST.Text = id;
             this.DataContext = new MonitoringDetailPageViewModel(id);
-
         }
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
@@ -48,6 +47,33 @@ namespace MonitoringGUI.View
         {
             var viewModel = (MonitoringDetailPageViewModel)DataContext;
             viewModel.UpdateTempData();
+        }
+
+        //tab Item이 선택될 때 각각 DB 접근
+        private void DXTabControl_SelectionChanged(object sender, DevExpress.Xpf.Core.TabControlSelectionChangedEventArgs e)
+        {
+            var viewModel = (MonitoringDetailPageViewModel)DataContext;
+            if (viewModel == null)
+                return;
+            if (bodyTab.SelectedItem is DXTabItem selectedItem)
+            {
+                // 선택된 탭에 대한 로직 처리
+                //MessageBox.Show($"Selected tab: {selectedItem.Header}");
+                switch (selectedItem.Header)
+                {
+                    case "그래프":
+                        break;
+                    case "표":
+                        break;
+                    case "온도":
+                        viewModel.GetAllTemp();
+                        break;
+                    default:
+                        viewModel.GetTarget();
+                        break;
+
+                }
+            }
         }
     }
 
@@ -70,14 +96,18 @@ namespace MonitoringGUI.View
         public MonitoringDetailPageViewModel()
         {
             this.Data = GetTempData();
+            
 
         }
         public MonitoringDetailPageViewModel(string id)
         {
             //GetAllTarget();
-            GetTarget(id);
+            //GetTarget(id);
+            info = new MonitoringInfo();
+            info.Id = id;
+            GetTarget();
             this.Data = GetTempData();
-
+            //GetAllTemp(id);
         }
         public class MonitoringInfo
         {
@@ -149,16 +179,20 @@ namespace MonitoringGUI.View
                 using (var connection = new MySqlConnection(AWS.url))
                 {
                     connection.Open();
-                    string query = "SELECT * FROM " + AWS.temp_table+" WHERE target_id = "+info.Id;
+                    string query = "SELECT * FROM " + AWS.temp_table + " WHERE temp_target_id = "+info.Id;//+id;
                     var command = new MySqlCommand(query, connection);
                     Temp_Data = new ObservableCollection<Temp> { };
                     using (var reader = command.ExecuteReader())
                     {
-
+                        if (!reader.Read())
+                        {
+                            MessageBox.Show("조회된 데이터가 없습니다.");
+                            return;
+                        }
                         while (reader.Read())
                         {
                             // 데이터 처리 로직
-                            Temp_Data.Add(new Temp { time = reader["time"].TryConvertToDateTime(), temp = Convert.ToDouble(reader["temp"]), });
+                            Temp_Data.Add(new Temp { time = reader["time"].TryConvertToDateTime(), temp = Convert.ToDouble(reader["value"]), });
                         }
                         OnPropertyChanged(nameof(Temp_Data));
                     }
@@ -170,14 +204,14 @@ namespace MonitoringGUI.View
             }
         }
         //모니터링 대상 단일 출력
-        public void GetTarget(string id)
+        public void GetTarget()
         {
             try
             {
                 using (var connection = new MySqlConnection(AWS.url))
                 {
                     connection.Open();
-                    string query = "SELECT * FROM " + AWS.target_table+" WHERE id = "+id;
+                    string query = "SELECT * FROM " + AWS.target_table+" WHERE id = "+info.Id;
                     var command = new MySqlCommand(query, connection);
                     using (var reader = command.ExecuteReader())
                     {

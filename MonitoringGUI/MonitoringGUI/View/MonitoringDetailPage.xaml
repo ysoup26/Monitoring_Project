@@ -59,21 +59,18 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <Style x:Key="inspection_buttonStyle" TargetType="Button">
+        <Style x:Key="icon_horizontal_buttonStyle" TargetType="Button">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5" Padding="10">
                             <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="0.8*"/>
-                                    <RowDefinition Height="3*"/>
-                                    <RowDefinition Height="2*"/>
-                                </Grid.RowDefinitions>
-                                <Grid Grid.Row="1" Margin="8">
-                                    <Image Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}" />
-                                </Grid>
-                                <ContentPresenter Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}" />
+                                <ContentPresenter Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Grid>
                         </Border>
                     </ControlTemplate>
@@ -127,7 +124,10 @@
             <Grid Grid.Column="0" Background="#FF25275A">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
-                    <RowDefinition Height="8*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="4*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Button Grid.Row="0" Margin="10"
@@ -135,8 +135,13 @@
                         <Image Source="{dx:FontIconSource 59720, ColorName=White}"/>
                     </Button>
                 </Grid>
-                     
+                <Button Grid.Row="1" Style="{StaticResource icon_horizontal_buttonStyle}" Tag="./img/icons8-save-100.png" 
+                        Content="정보 수정" Margin="10"/>
+                <Button Grid.Row="2" Style="{StaticResource icon_horizontal_buttonStyle}" Tag="./img/icons8-save-100.png" 
+                        Content="모니터링 삭제" Margin="10" />
+
                 <Grid Grid.Row="1">
+                    <!--
                     <ListView Background="Transparent" BorderBrush="Transparent" Grid.RowSpan="2">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
@@ -148,66 +153,90 @@
                         <ListViewItem Content="온도" x:Name="Inspection1" IsSelected="True"/>
                         <ListViewItem Content="습도" x:Name="Inspection2"/>
                     </ListView>
+                    -->
                 </Grid>
             </Grid>
             <!-- 내용 -->
             <DockPanel Grid.Column="1">
-                <dx:DXTabControl>
+                <dx:DXTabControl x:Name="bodyTab" SelectionChanged="DXTabControl_SelectionChanged">
                     <dx:DXTabItem
                         Header="기본정보" IsSelected="True">
                         <Grid>
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4*"/>
                                 <ColumnDefinition Width="3*"/>
-                                <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="2*"/>
-                                    <RowDefinition Height="1*"/>
-                                </Grid.RowDefinitions>
-                                <Grid Grid.Row="0" Margin="20">
-                                    <Image Source="./img/memory_sample.jpg"/>
-                                </Grid>
-                                <Grid Grid.Row="1" Margin="20">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="1*"/>
-                                        <RowDefinition Height="1*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1*"/>
-                                        <ColumnDefinition Width="1*"/>
-                                        <ColumnDefinition Width="1*"/>
-                                        <ColumnDefinition Width="1*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="모니터링 이름"></TextBlock>
-                                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding info.Name}"></TextBlock>
-                                    <TextBlock Grid.Row="0" Grid.Column="2" Text="온도 센서 유무"></TextBlock>
-                                    <TextBlock Grid.Row="0" Grid.Column="3" Text="{Binding info.Temp}"></TextBlock>
-                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="모니터링 생성일"></TextBlock>
-                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding info.Time}"></TextBlock>
-                                    <TextBlock Grid.Row="1" Grid.Column="2" Text="습도 센서 유무"></TextBlock>
-                                    <TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding info.Hum}"></TextBlock>
-                                </Grid>
-                            </Grid>
-                            <Grid Grid.Column="1">
-                                <Grid.RowDefinitions>
                                     <RowDefinition Height="0.8*"/>
                                     <RowDefinition Height="5*"/>
-                                    <RowDefinition Height="1*"/>
                                     <RowDefinition Height="1*"/>
                                 </Grid.RowDefinitions>
                                 <Button Grid.Row="0"
                                         HorizontalAlignment="Right" BorderBrush="Transparent" Click="ChartUpdateButton_Click">
                                     <Image Source="{dx:FontIconSource 59255}"/>
                                 </Button>
-                                <TextBlock Grid.Row="1" x:Name="TEST" />
-                                <Button Grid.Row="2" Style="{StaticResource inspection_buttonStyle}" Tag="./img/icons8-save-100.png" 
-                                        Content="정보 수정" />
-                                <Button Grid.Row="3" Style="{StaticResource inspection_buttonStyle}" Tag="./img/icons8-save-100.png" 
-                                        Content="모니터링 삭제" />
+                                <Grid Grid.Row="1" Margin="20">
+                                    <Image Source="./img/memory_sample.jpg"/>
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Column="1" Height="300" Margin="20">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Row="0" Grid.Column="0"  VerticalAlignment="Center">
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="모니터링 이름"></TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding info.Name}"></TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="0" Grid.Column="2"  VerticalAlignment="Center">
+                                    <TextBlock Text="모니터링 아이디"></TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="0" Grid.Column="3"  VerticalAlignment="Center">
+                                    <TextBlock Grid.Row="0" Grid.Column="3" Text="{Binding info.Id}"></TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">
+                                    <TextBlock Text="모니터링 생성일"></TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="2" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding info.Time}"></TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="온도 센서"/>
+                                </Grid>
+                                <Grid Grid.Row="2" Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding info.Temp}"></TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="2" Grid.Column="2" VerticalAlignment="Center">
+                                    <TextBlock Grid.Row="2" Grid.Column="2" Text="습도 센서 유무"></TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="2" Grid.Column="3" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding info.Hum}"></TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">
+                                    <TextBlock Text="최근 온도"></TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="3" Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding info.Temp}"></TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="3" Grid.Column="2" VerticalAlignment="Center">
+                                    <TextBlock Text="최근 습도"></TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="3" Grid.Column="3" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding info.Hum}"></TextBlock>
+                                </Grid>
                             </Grid>
                         </Grid>
-
                     </dx:DXTabItem>
                     <dx:DXTabItem
                         Header="그래프">
@@ -331,7 +360,7 @@ Content="Title" />
                                         <dxc:LineSeries2D
                                             MarkerVisible="True"
                                             AnimationAutoStartMode="SetStartState"
-                                            ArgumentDataMember="date"
+                                            ArgumentDataMember="time"
                                             ValueDataMember="temp"
                                             CrosshairLabelPattern="{}{S}: {V}ºC">
                                             <dxc:LineSeries2D.Label>
@@ -354,7 +383,8 @@ Content="Title" />
                         </Grid>
                     </dx:DXTabItem>
                     <dx:DXTabItem
-                        Header="온도">
+                        Header="온도 그래프"
+                        >
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0.5*"/>
@@ -368,7 +398,8 @@ Content="Title" />
                 Grid.Row="1"
                 Name="chart3"
                 CrosshairEnabled="True"
-                DataSource="{Binding Temp_Data}">
+                DataSource="{Binding Temp_Data}"
+                               >
                                 <dxc:ChartControl.Diagram>
                                     <dxc:XYDiagram2D>
                                         <!--#region Axes-->
@@ -402,7 +433,7 @@ Content="Title" />
                                         <dxc:LineSeries2D
                         MarkerVisible="True"
                         AnimationAutoStartMode="SetStartState"
-                        ArgumentDataMember="date"
+                        ArgumentDataMember="time"
                         ValueDataMember="temp"
                         CrosshairLabelPattern="{}{S}: {V}ºC">
                                             <dxc:LineSeries2D.Label>
@@ -418,7 +449,80 @@ Content="Title" />
                                     <dxc:Title
                     Dock="Top"
                     HorizontalAlignment="Center"
-                    Content="Title" />
+                    Content="최근 몇 시간 동안의 온도 변화" />
+                                </dxc:ChartControl.Titles>
+                                <!--#endregion-->
+                            </dxc:ChartControl>
+                        </Grid>
+                    </dx:DXTabItem>
+                    <dx:DXTabItem
+        Header="습도 그래프"
+        >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.5*"/>
+                                <RowDefinition Height="10*"/>
+                            </Grid.RowDefinitions>
+                            <Button Grid.Row="0"
+HorizontalAlignment="Right" BorderBrush="Transparent" Click="ChartUpdateButton_Click">
+                                <Image Source="{dx:FontIconSource 59255}"/>
+                            </Button>
+                            <dxc:ChartControl
+Grid.Row="1"
+Name="chart4"
+CrosshairEnabled="True"
+DataSource="{Binding Temp_Data}"
+               >
+                                <dxc:ChartControl.Diagram>
+                                    <dxc:XYDiagram2D>
+                                        <!--#region Axes-->
+                                        <dxc:XYDiagram2D.AxisX>
+                                            <dxc:AxisX2D
+            GridLinesVisible="True">
+                                                <dxc:AxisX2D.DateTimeScaleOptions>
+                                                    <dxc:ContinuousDateTimeScaleOptions />
+                                                </dxc:AxisX2D.DateTimeScaleOptions>
+                                                <dxc:AxisX2D.WholeRange>
+                                                    <dxc:Range
+                    AutoSideMargins="False"
+                    SideMarginsValue="1800000" />
+                                                </dxc:AxisX2D.WholeRange>
+                                            </dxc:AxisX2D>
+                                        </dxc:XYDiagram2D.AxisX>
+                                        <dxc:XYDiagram2D.AxisY>
+                                            <dxc:AxisY2D
+                 GridLinesMinorVisible="True">
+                                                <dxc:AxisY2D.WholeRange>
+                                                    <dxc:Range
+                    dxc:AxisY2D.AlwaysShowZeroLevel="False" />
+                                                </dxc:AxisY2D.WholeRange>
+                                                <dxc:AxisY2D.Title>
+                                                    <dxc:AxisTitle
+                    Content="Hum" />
+                                                </dxc:AxisY2D.Title>
+                                            </dxc:AxisY2D>
+                                        </dxc:XYDiagram2D.AxisY>
+                                        <!--#endregion-->
+                                        <dxc:LineSeries2D
+        MarkerVisible="True"
+        AnimationAutoStartMode="SetStartState"
+        ArgumentDataMember="time"
+        ValueDataMember="hum"
+        CrosshairLabelPattern="{}{S}: {V} %">
+                                            <dxc:LineSeries2D.Label>
+                                                <dxc:SeriesLabel
+                ConnectorVisible="False"
+                ResolveOverlappingMode="Default"/>
+                                            </dxc:LineSeries2D.Label>
+                                        </dxc:LineSeries2D>
+                                    </dxc:XYDiagram2D>
+                                </dxc:ChartControl.Diagram>
+                                <!--#region Titles-->
+                                <dxc:ChartControl.Titles>
+                                    <dxc:Title
+    Dock="Top"
+    HorizontalAlignment="Center"
+    Content="최근 몇 시간 동안의 습도 변화" />
                                 </dxc:ChartControl.Titles>
                                 <!--#endregion-->
                             </dxc:ChartControl>
