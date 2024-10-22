@@ -176,50 +176,85 @@
                                     <Image Source="./img/memory_sample.jpg"/>
                                 </Grid>
                             </Grid>
-                            <Grid Grid.Column="1" Height="300" Margin="20">
+                            <Grid Grid.Column="1" Height="400" Margin="20">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="1*"/>
-                                    <RowDefinition Height="1*"/>
-                                    <RowDefinition Height="1*"/>
-                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="2*"/>
+                                    <RowDefinition Height="3*"/>
                                 </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid Grid.Row="0" Grid.Column="0"  VerticalAlignment="Center">
-                                    <TextBlock  Text="모니터링 이름" FontWeight="Bold"></TextBlock>
+                                <Grid Grid.Row="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="1*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Row="0" Grid.Column="0"  VerticalAlignment="Center">
+                                        <TextBlock  Text="모니터링 이름" FontWeight="Bold"></TextBlock>
+                                    </Grid>
+                                    <Grid Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding info.Name}"></TextBlock>
+                                    </Grid>
+                                    <Grid Grid.Row="0" Grid.Column="2"  VerticalAlignment="Center">
+                                        <TextBlock Text="모니터링 ID" FontWeight="Bold"></TextBlock>
+                                    </Grid>
+                                    <Grid Grid.Row="0" Grid.Column="3"  VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding info.Id}"></TextBlock>
+                                    </Grid>
+                                    <Grid Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">
+                                        <TextBlock Text="모니터링 생성일" FontWeight="Bold"></TextBlock>
+                                    </Grid>
+                                    <Grid Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="2" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding info.Time}"></TextBlock>
+                                    </Grid>
+                                    <Grid Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">
+                                        <TextBlock Text="온도 측정 유무" FontWeight="Bold"/>
+                                    </Grid>
+                                    <Grid Grid.Row="2" Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding info.Temp}"></TextBlock>
+                                    </Grid>
+                                    <Grid Grid.Row="2" Grid.Column="2" VerticalAlignment="Center">
+                                        <TextBlock Text="습도 측정 유무" FontWeight="Bold"></TextBlock>
+                                    </Grid>
+                                    <Grid Grid.Row="2" Grid.Column="3" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding info.Hum}"></TextBlock>
+                                    </Grid>
                                 </Grid>
-                                <Grid Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
-                                    <TextBlock Text="{Binding info.Name}"></TextBlock>
+                                <Grid Grid.Row="1">
+                                    <!-- 문제점 차트 -->
+                                    <dxc:ChartControl 
+                                        Name="chartControl1" >
+                                        <dxc:ChartControl.Diagram>
+                                            <dxc:SimpleDiagram3D >
+                                                <dxc:SimpleDiagram3D.Series>
+                                                    <dxc:PieSeries3D 
+                                                        LabelsVisibility="true"
+                                                        HoleRadiusPercent="50" DepthTransform="0.5">
+                                                        <dxc:PieSeries3D.Points>
+                                                            <dxc:SeriesPoint Argument="정상" Value="10" />
+                                                            <dxc:SeriesPoint Argument="오류" Value="1" />
+                                                        </dxc:PieSeries3D.Points>
+                                                        <dxc:PieSeries3D.PointOptions>
+                                                            <dxc:PointOptions>
+                                                                <dxc:PointOptions.ValueNumericOptions>
+                                                                    <dxc:NumericOptions Format="Percent" Precision="0" />
+                                                                </dxc:PointOptions.ValueNumericOptions>
+                                                            </dxc:PointOptions>
+                                                        </dxc:PieSeries3D.PointOptions>
+                                                    </dxc:PieSeries3D>
+                                                </dxc:SimpleDiagram3D.Series>
+                                            </dxc:SimpleDiagram3D>
+                                        </dxc:ChartControl.Diagram>
+                                        <dxc:ChartControl.Titles>
+                                            <dxc:Title Dock="Top" HorizontalAlignment="Center" FontSize="15">발생한 문제점</dxc:Title>
+                                        </dxc:ChartControl.Titles>
+                                    </dxc:ChartControl>
                                 </Grid>
-                                <Grid Grid.Row="0" Grid.Column="2"  VerticalAlignment="Center">
-                                    <TextBlock Text="모니터링 ID" FontWeight="Bold"></TextBlock>
-                                </Grid>
-                                <Grid Grid.Row="0" Grid.Column="3"  VerticalAlignment="Center">
-                                    <TextBlock Text="{Binding info.Id}"></TextBlock>
-                                </Grid>
-                                <Grid Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">
-                                    <TextBlock Text="모니터링 생성일" FontWeight="Bold"></TextBlock>
-                                </Grid>
-                                <Grid Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="2" VerticalAlignment="Center">
-                                    <TextBlock Text="{Binding info.Time}"></TextBlock>
-                                </Grid>
-                                <Grid Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">
-                                    <TextBlock Text="온도 측정 유무" FontWeight="Bold"/>
-                                </Grid>
-                                <Grid Grid.Row="2" Grid.Column="1" VerticalAlignment="Center">
-                                    <TextBlock Text="{Binding info.Temp}"></TextBlock>
-                                </Grid>
-                                <Grid Grid.Row="2" Grid.Column="2" VerticalAlignment="Center">
-                                    <TextBlock Text="습도 측정 유무" FontWeight="Bold"></TextBlock>
-                                </Grid>
-                                <Grid Grid.Row="2" Grid.Column="3" VerticalAlignment="Center">
-                                    <TextBlock Text="{Binding info.Hum}"></TextBlock>
-                                </Grid>
-                                
                             </Grid>
                         </Grid>
                     </dx:DXTabItem>
