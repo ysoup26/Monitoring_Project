@@ -20,6 +20,7 @@ using System.Collections.ObjectModel;
 using Google.Protobuf.Collections;
 using System.Diagnostics;
 using DevExpress.Mvvm.Native;
+using System.Windows.Controls.Primitives;
 
 namespace MonitoringGUI.View
 {
@@ -28,6 +29,7 @@ namespace MonitoringGUI.View
     /// </summary>
     public partial class MonitoringMenuPage : Page
     {
+        bool IsDelete = false;
         //private List<MonitoringInfo> _list;
         public MonitoringMenuPage()
         {
@@ -41,13 +43,25 @@ namespace MonitoringGUI.View
             NavigationService.Navigate(menu_page);
             //https://shine10e.tistory.com/68 이전 페이지로 돌아올 때 추가 처리를 해야되면 참고 
         }
-        //세부 모니터링을 선택하는 버튼
+        //세부 모니터링 삭제/선택 버튼
         private void Monitoring_Button_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var id = button.Tag.ToString(); // YourDataModel은 실제 모델의 타입으로 변경
-            MonitoringDetailPage monitoring_detail_page = new MonitoringDetailPage(id);
-            NavigationService.Navigate(monitoring_detail_page);
+            var id = button.Tag.ToString();
+            //해당 모니터링 삭제
+            if (IsDeleteButton.IsChecked == true)
+            {
+                var viewModel = (MonitoringMenuPageViewModel)DataContext;
+                string query = "DELETE FROM " + AWS.target_table + " WHERE id = "+id;
+                viewModel.MySqlQueryExecuter(query);
+                viewModel.GetAllTarget();
+                
+            }
+            else
+            {
+                MonitoringDetailPage monitoring_detail_page = new MonitoringDetailPage(id);
+                NavigationService.Navigate(monitoring_detail_page);
+            }
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -68,14 +82,6 @@ namespace MonitoringGUI.View
                 viewModel.GetAllTarget();
             }
             
-        }
-        // 모니터링 삭제 버튼
-        private void Monitoring_Delete_Button_Click(object sender, RoutedEventArgs e)
-        {
-            var viewModel = (MonitoringMenuPageViewModel)DataContext;
-            string query = "DELETE FROM " + AWS.target_table + " WHERE id = 6";
-            viewModel.MySqlQueryExecuter(query);
-            viewModel.GetAllTarget();
         }
         //모니터링 조회 버튼
         private void Monitoring_Check_Button_Click(object sender, RoutedEventArgs e)

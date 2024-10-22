@@ -56,6 +56,63 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="menu_horizontal_toggleButtonStyle" TargetType="ToggleButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.4*"/>
+                                    <ColumnDefinition Width="0.8*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="1" Margin="5">
+                                    <Image Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}" />
+                                </Grid>
+                                <ContentPresenter Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="10 0 0 0"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Color="#464f78"/>
+                        <GradientStop Color="#323f6c" Offset="0.9"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="15 10"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                <GradientStop Color="#323f6c"/>
+                                <GradientStop Color="#FF1F284E" Offset="0.9"/>
+                            </LinearGradientBrush>
+
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                <GradientStop Color="IndianRed"/>
+                                <GradientStop Color="#FFAB3535" Offset="0.9"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
         <Style x:Key="menu_horizontal_buttonStyle" TargetType="Button">
             <Setter Property="Template">
                 <Setter.Value>
@@ -178,7 +235,12 @@
                     </Grid>
                     <Grid Grid.Row="1">
                         <Button Style="{StaticResource menu_horizontal_buttonStyle}" Tag="{dx:FontIconSource 59213, ColorName=White}"
-                            Content="모니터링 삭제"  Click="Monitoring_Delete_Button_Click"/>
+                            Content="모니터링 삭제"  />
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <ToggleButton x:Name="IsDeleteButton"  Content="모니터링 삭제" IsChecked="False" Style="{StaticResource menu_horizontal_toggleButtonStyle}"
+                            Tag="{dx:FontIconSource 59213, ColorName=White}" Click="Monitoring_Delete_Button_Click">
+                        </ToggleButton>
                     </Grid>
                 </Grid>
             </Grid>
