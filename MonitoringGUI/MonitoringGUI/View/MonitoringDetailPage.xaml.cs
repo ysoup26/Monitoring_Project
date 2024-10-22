@@ -69,7 +69,7 @@ namespace MonitoringGUI.View
             if (editPopup.ShowDialog() == true)
             {
                 viewModel.MySqlQueryExecuter(editPopup.query);
-                viewModel.GetAllTarget();
+                viewModel.GetTarget();
             }
 
         }
@@ -88,6 +88,8 @@ namespace MonitoringGUI.View
                     case "그래프":
                         break;
                     case "리스트":
+                        viewModel.GetAllTemp();
+                        viewModel.GetAllHum();
                         break;
                     case "온도 그래프":
                         viewModel.GetAllTemp();
@@ -149,6 +151,8 @@ namespace MonitoringGUI.View
             public DateTime Time { get; set; }
             public string Temp { get; set; }
             public string Hum {  get; set; }
+            public string Recent_Temp { get; set; }
+            public string Recent_Hum { get; set; }
         }
 
         //Do query: Insert, Delete, Update
@@ -310,8 +314,39 @@ namespace MonitoringGUI.View
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
+        //최근 온도 값
+        public void GetTemp()
+        {
+            try
+            {
+                using (var connection = new MySqlConnection(AWS.url))
+                {
+                    connection.Open();
+                    string query = "SELECT * FROM " + AWS.target_table + " WHERE id = " + info.Id;
+                    var command = new MySqlCommand(query, connection);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            info = new MonitoringInfo
+                            {
+                                Name = reader["name"].ToString(),
+                                Id = reader["id"].ToString(),
+                                Time = reader["time"].TryConvertToDateTime(),
+                                Temp = reader["temp"].ToString(),
+                                Hum = reader["hum"].ToString(),
+                            };
+                        }
+                        OnPropertyChanged(nameof(info));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
 
-        
         public static ObservableCollection<Temp> GetTempData()
         {
             return new ObservableCollection<Temp>

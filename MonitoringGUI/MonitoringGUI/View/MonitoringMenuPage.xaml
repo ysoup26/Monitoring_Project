@@ -234,13 +234,12 @@
                        Content="모니터링 등록" Click="Monitoring_Resister_Button_Click"/>
                     </Grid>
                     <Grid Grid.Row="1">
-                        <Button Style="{StaticResource menu_horizontal_buttonStyle}" Tag="{dx:FontIconSource 59213, ColorName=White}"
-                            Content="모니터링 삭제"  />
+                        <ToggleButton x:Name="IsDeleteButton"  Content="모니터링 삭제" IsChecked="False" Style="{StaticResource menu_horizontal_toggleButtonStyle}"
+                            Tag="{dx:FontIconSource 59213, ColorName=White}">
+                        </ToggleButton>
                     </Grid>
                     <Grid Grid.Row="2">
-                        <ToggleButton x:Name="IsDeleteButton"  Content="모니터링 삭제" IsChecked="False" Style="{StaticResource menu_horizontal_toggleButtonStyle}"
-                            Tag="{dx:FontIconSource 59213, ColorName=White}" Click="Monitoring_Delete_Button_Click">
-                        </ToggleButton>
+                        
                     </Grid>
                 </Grid>
             </Grid>

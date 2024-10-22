@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MonitoringGUI.View"
         mc:Ignorable="d"
-        Title="모니터링 등록" Height="600" Width="400"
+        Title="모니터링" Height="600" Width="400"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen">
     <WindowChrome.WindowChrome>
@@ -22,7 +22,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
-                        <Border x:Name="border" Background="White" BorderBrush="#FF93DFFF" BorderThickness="1.5"  CornerRadius="5" Padding="10 18">
+                        <Border x:Name="border" Background="White" BorderBrush="#FF93DFFF" BorderThickness="1.5"  CornerRadius="5" Padding="10 20">
                             <ScrollViewer x:Name="PART_ContentHost"/>
                         </Border>
 
@@ -66,7 +66,7 @@
             </Grid.RowDefinitions>
             <!-- 제목 -->
             <Grid Grid.Column="1" Grid.Row="0" Margin="10">
-                <TextBlock Text="모니터링 등록" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="36" FontFamily="Yu Gothic UI Light" />
+                <TextBlock x:Name="title" Text="모니터링 수정" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="36" FontFamily="Yu Gothic UI Light" />
             </Grid>
             <!-- 로그인 컴포넌트 -->
             <Grid Grid.Column="1" Grid.Row="1" Margin="30">
@@ -91,7 +91,7 @@
                         <!-- name TextBox -->
                         <TextBox x:Name="name" Style="{StaticResource textBoxStyle}" IsKeyboardFocusedChanged="Error_Hidden"/>
                         <!-- name TextBlock: Placeholder-->
-                        <TextBlock IsHitTestVisible="False" Padding="15 18" Text="모니터링 명" VerticalAlignment="Top" Foreground="Gray">
+                        <TextBlock IsHitTestVisible="False" Padding="15 25" Text="모니터링 명" VerticalAlignment="Top" Foreground="Gray">
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -143,7 +143,7 @@
                             <ColumnDefinition Width="1*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0" Margin="0 0 10 0">
-                            <Button Content="수정"
+                            <Button Content="수정" x:Name="submit_button"
                 Style="{StaticResource simple_buttonStyle}"
                 Click="EditButton_Click"/>
                         </Grid>

@@ -28,13 +28,14 @@ namespace MonitoringGUI.View
         public EditPopup()
         {
             InitializeComponent();
-            name.Text = now_name;
-            is_temp_check.IsChecked = (now_temp.Equals("1")) ? true : false;
-            is_hum_check.IsChecked = (now_hum.Equals("1")) ? true : false;
+            title.Text = "모니터링 등록";
+            submit_button.Content = "등록";
         }
         public EditPopup(string n,string t,string h,string i)
         {
             InitializeComponent();
+            title.Text = "모니터링 수정";
+            submit_button.Content = "수정";
             name.Text = n;
             is_temp_check.IsChecked = (t.Equals("1")) ? true : false;
             is_hum_check.IsChecked = (h.Equals("1")) ? true : false;
@@ -58,8 +59,16 @@ namespace MonitoringGUI.View
                 nameError.Visibility = Visibility.Visible;
                 nameBorder.BorderBrush = new SolidColorBrush(Colors.IndianRed);
 
+            }//생성
+            else if(submit_button.Content.Equals("생성")){
+                this.now_name = name.Text;
+                this.now_temp = (is_temp_check.IsChecked == true) ? "1" : "0";
+                this.now_hum = (is_hum_check.IsChecked == true) ? "1" : "0";
+                this.query = "INSERT INTO  " + AWS.target_table + "(name,temp,hum) VALUES('" + now_name + "'," + now_temp + "," + now_hum + ");";
+                this.DialogResult = true;
+                this.Close();
             }
-            else //로그인
+            else //수정
             {
                 this.now_name = name.Text;
                 this.now_temp = (is_temp_check.IsChecked == true) ? "1" : "0";

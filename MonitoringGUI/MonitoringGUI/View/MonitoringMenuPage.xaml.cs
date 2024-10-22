@@ -51,6 +51,10 @@ namespace MonitoringGUI.View
             //해당 모니터링 삭제
             if (IsDeleteButton.IsChecked == true)
             {
+                if (MessageBox.Show("정말 삭제하시겠습니까?\n", "모니터링 삭제", MessageBoxButton.YesNo) == MessageBoxResult.No)
+                {
+                    return;
+                }
                 var viewModel = (MonitoringMenuPageViewModel)DataContext;
                 string query = "DELETE FROM " + AWS.target_table + " WHERE id = "+id;
                 viewModel.MySqlQueryExecuter(query);
@@ -72,13 +76,13 @@ namespace MonitoringGUI.View
         //신규 모니터링 등록 버튼
         private void Monitoring_Resister_Button_Click(object sender, RoutedEventArgs e)
         {
-            RegisterPopup registerPopup = new RegisterPopup();
-            if (registerPopup.ShowDialog() == true)
+            EditPopup popup = new EditPopup();
+            if (popup.ShowDialog() == true)
             {
-                MessageBox.Show(registerPopup.query);
+                MessageBox.Show(popup.query);
                 var viewModel = (MonitoringMenuPageViewModel)DataContext;
                 //string query = "INSERT INTO  " + AWS.target_table + "(name) VALUES('InWPF2')";
-                viewModel.MySqlQueryExecuter(registerPopup.query);
+                viewModel.MySqlQueryExecuter(popup.query);
                 viewModel.GetAllTarget();
             }
             
