@@ -85,8 +85,6 @@ namespace MonitoringGUI.View
                 //MessageBox.Show($"Selected tab: {selectedItem.Header}");
                 switch (selectedItem.Header)
                 {
-                    case "그래프":
-                        break;
                     case "리스트":
                         viewModel.GetAllTemp();
                         viewModel.GetAllHum();
