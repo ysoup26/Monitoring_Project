@@ -319,24 +319,15 @@
                                         <!--#region Axes-->
                                         <dxc:XYDiagram2D.AxisX>
                                             <dxc:AxisX2D
-                            GridLinesVisible="True">
+                            >
                                                 <dxc:AxisX2D.DateTimeScaleOptions>
                                                     <dxc:ContinuousDateTimeScaleOptions />
                                                 </dxc:AxisX2D.DateTimeScaleOptions>
-                                                <dxc:AxisX2D.WholeRange>
-                                                    <dxc:Range
-                                    AutoSideMargins="False"
-                                    SideMarginsValue="1800000" />
-                                                </dxc:AxisX2D.WholeRange>
+                                                
                                             </dxc:AxisX2D>
                                         </dxc:XYDiagram2D.AxisX>
                                         <dxc:XYDiagram2D.AxisY>
-                                            <dxc:AxisY2D
-                                 GridLinesMinorVisible="True">
-                                                <dxc:AxisY2D.WholeRange>
-                                                    <dxc:Range
-                                    dxc:AxisY2D.AlwaysShowZeroLevel="False" />
-                                                </dxc:AxisY2D.WholeRange>
+                                            <dxc:AxisY2D>
                                                 <dxc:AxisY2D.Title>
                                                     <dxc:AxisTitle
                                     Content="Temp" />
@@ -346,14 +337,12 @@
                                         <!--#endregion-->
                                         <dxc:LineSeries2D
                         MarkerVisible="True"
-                        AnimationAutoStartMode="SetStartState"
+                        AnimationAutoStartMode="PlayOnce"
                         ArgumentDataMember="time"
                         ValueDataMember="temp"
                         CrosshairLabelPattern="{}{S}: {V}ºC">
                                             <dxc:LineSeries2D.Label>
-                                                <dxc:SeriesLabel
-                                ConnectorVisible="False"
-                                ResolveOverlappingMode="Default"/>
+                                                <dxc:SeriesLabel/>
                                             </dxc:LineSeries2D.Label>
                                         </dxc:LineSeries2D>
                                     </dxc:XYDiagram2D>

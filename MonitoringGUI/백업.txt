@@ -1,0 +1,227 @@
+<UserControl x:Class="VineMvvm.Login.Views.LoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" 
+             xmlns:ViewModels="clr-namespace:VineMvvm.Login.ViewModels"
+             mc:Ignorable="d"
+             Height="700" Width="500">
+    <dxmvvm:Interaction.Behaviors>
+        <dx:DXMessageBoxService/>
+    </dxmvvm:Interaction.Behaviors>
+    <!-- 미리 구현해둔 리소스 -->
+    <UserControl.Resources>
+        
+        <!-- PW passwordBox-->
+        <Style x:Key="passwordBoxStyle" TargetType="PasswordBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Border x:Name="border" Background="White" BorderBrush="#FF93DFFF" BorderThickness="1.5"  CornerRadius="5" Padding="10">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
+        <!-- 심플 버튼 -->
+        
+    </UserControl.Resources>
+    <Border x:Name="border" BorderBrush="#FF4044ED" BorderThickness="5" CornerRadius="10">
+        <!-- 본문 -->
+        <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <!-- #region 제목 -->
+        <Grid Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="Login" Foreground="White" FontSize="72" FontFamily="Bauhaus 93" />
+        </Grid>
+        <!-- #end 제목-->
+        <!-- #region 로그인 컴포넌트 -->
+        <Grid Grid.Row="1"  Margin="30">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <!-- ID 입력-->
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <!-- ID TextBox -->
+                    <TextBox x:Name="idBox">
+                        <TextBox.Template>
+                            <ControlTemplate TargetType="TextBox">
+                                <Border x:Name="idBox_border" 
+                                        Background="White" 
+                                        BorderBrush="#FF93DFFF" 
+                                        BorderThickness="2" 
+                                        CornerRadius="5" 
+                                        Padding="10 0 0 0">
+                                        <Grid>
+                                            <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center"/>
+                                            <TextBlock x:Name="idBox_placeholder" Visibility="Hidden" VerticalAlignment="Center" Padding="5 0 0 0" Text="ID" Foreground="Gray"/>
+                                        </Grid>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsFocused" Value="True">
+                                        <Setter TargetName="idBox_border" Property="BorderBrush" Value="IndianRed"/>
+                                    </Trigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=idBox}" Value="">
+                                        <Setter TargetName="idBox_placeholder" Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </TextBox.Template>
+                    </TextBox>
+                </Grid>
+                <!-- ID 경고 문구 -->
+                <Grid Grid.Row="1" Margin="10 5 0 20">
+                    <TextBlock Text="*ID를 입력해주세요." Visibility="Hidden" x:Name="idError" Foreground="IndianRed"/>
+                </Grid>
+            </Grid>
+            <!-- PASSWORD 입력-->
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <!-- ID TextBox -->
+                        <PasswordBox x:Name="pwBox" Password=""
+                                     PasswordChanged="PasswordChanged">
+                            <PasswordBox.Template>
+                                <ControlTemplate TargetType="PasswordBox">
+                                    <Border x:Name="pwBox_border" 
+                                          Background="White" 
+                                          BorderBrush="#FF93DFFF" 
+                                          BorderThickness="2" 
+                                          CornerRadius="5" 
+                                          Padding="10 0 0 0">
+                                        <Grid>
+                                            <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center"/>
+                                            <TextBlock x:Name="pwBox_placeholder" Visibility="Visible" VerticalAlignment="Center" Padding="5 0 0 0" Text="PW" Foreground="Gray"/>
+                                        </Grid>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsFocused" Value="True">
+                                            <Setter TargetName="pwBox_border" Property="BorderBrush" Value="IndianRed"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </PasswordBox.Template>
+                        </PasswordBox>
+                    </Grid>
+                    <Grid Grid.Row="1" Margin="10 5 0 20">
+                    <TextBlock Text="*비밀번호를 입력해주세요."  Visibility="Hidden" x:Name="passwordError"  Foreground="IndianRed">
+                    </TextBlock>
+                </Grid>
+            </Grid>
+            <!-- 로그인/종료 버튼 -->
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0" Margin="0 0 10 0">
+                        <Button Content="Login"
+                                Command="{Binding LoginCommand}"
+                                Foreground="white"
+                                FontWeight="Bold"
+                                BorderThickness="0"
+                                Cursor="Hand">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}" CornerRadius="5" Padding="10">
+                                        <Grid>
+                                            <ContentPresenter Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Grid>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Background" Value="#FF4044ED" />
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#FF2629B7"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </Grid>
+                    <Grid Grid.Column="1" Margin="10 0 0 0">
+                        <Button Content="Exit"
+                            Command="{Binding ExitCommand}"
+                            Foreground="white"
+                            FontWeight="Bold"
+                            BorderThickness="0"
+                            Cursor="Hand">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}" CornerRadius="5" Padding="10">
+                                        <Grid>
+                                            <ContentPresenter Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Grid>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Background" Value="IndianRed" />
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#FFAB3535"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="1" Margin="10 5 0 20">
+                    <TextBlock Text="*잘못된 로그인 입니다. 다시 시도해주세요."  Visibility="Hidden" x:Name="loginError"  Foreground="IndianRed">
+                    </TextBlock>
+                </Grid>
+            </Grid>
+
+            <StackPanel Grid.Row="3">
+                <TextBlock Text="{Binding CurrentDate}" FontSize="30" Foreground="White" TextAlignment="Center"/>
+            </StackPanel>
+        </Grid>
+        <!-- #end 로그인 컴포넌트-->
+
+    </Grid>
+    </Border>
+    
+    
+</UserControl>
+   private void PasswordChanged(object sender, RoutedEventArgs e)
+{
+    var passwordBox = sender as PasswordBox;
+    if (passwordBox == null) return;
+    
+    var placeholder = (TextBlock)passwordBox.Template.FindName("pwBox_placeholder", passwordBox);
+
+    if (placeholder != null)
+    {
+        // 비밀번호가 비어 있는지 확인
+        placeholder.Visibility = string.IsNullOrEmpty(passwordBox.Password) ? Visibility.Visible : Visibility.Hidden;
+    }
+}
